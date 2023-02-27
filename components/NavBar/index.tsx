@@ -6,13 +6,17 @@ import { animated } from "react-spring";
 
 // import { below } from "../../styles/breakpoints";
 import Burguer from "./Hamburguer";
+import CartIcon from "./CartIcon";
+import UserIcon from "./UserIcon";
+import { Margin } from "@/styles/globalSC";
 
 const NavBar = () => {
   return (
     <>
       <Nav>
-        <Margin>
-          <Link
+        <Margin style={{ justifyContent: "space-between" }}>
+          <Burguer />
+          <Logo
             href="/"
             style={{ fontWeight: "900", color: "hsla(35, 25%, 30%, 1)" }}
           >
@@ -23,12 +27,11 @@ const NavBar = () => {
               alt={"logo"}
               style={{ background: "lightgrey", padding: "5px" }}
             />
-          </Link>
-          {/* <Link href="/about" style={{ fontWeight: "900", color: "white" }}>
-            ABOUT
-          </Link> */}
-
-          <Burguer />
+          </Logo>
+          <div style={{ display: "flex" }}>
+            <UserIcon />
+            <CartIcon />
+          </div>
         </Margin>
       </Nav>
     </>
@@ -59,13 +62,13 @@ const Nav = styled.nav`
   align-items: center;
 `;
 
-const Margin = styled.div`
+const Div = styled.div`
   max-width: 1200px;
   width: 100%;
   margin: 10px auto;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
 
   a {
@@ -73,11 +76,11 @@ const Margin = styled.div`
   }
 `;
 
-const Logo = styled.img`
+const Logo = styled(Link)`
   width: 100px;
   height: 100%;
 
   background: transparent;
   cursor: pointer;
-  // filter: drop-shadow(0px 0px 50px hsla(340, 100%, 70%, 0.3));
+  filter: drop-shadow(0px 0px 50px hsla(340, 100%, 70%, 0.3));
 `;

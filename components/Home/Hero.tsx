@@ -4,35 +4,27 @@ import { animated, useTransition, config, useTrail } from "react-spring";
 import useScrollTo from "react-spring-scroll-to-hook";
 import { below } from "@/styles/breakpoints";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import usePrevious from "../Hooks/usePrevious";
 
 const Hero = () => {
   const [picIndex, setpicIndex] = useState(0);
   const [auto, setauto] = useState(false);
   const [disable, setDisable] = useState(false);
-  const [show, setshow] = useState(false);
 
   const backPic = [
     {
-      url: "https://res.cloudinary.com/marcos-jampietri/image/upload/c_scale,w_800/v1656456605/IMG_20220511_164505_euksct.jpg",
-      pos: "center top",
-    },
-    {
-      url: "https://res.cloudinary.com/marcos-jampietri/image/upload/c_scale,w_800/v1656456611/IMG_20220511_164323_slxges.jpg",
+      url: "https://images.unsplash.com/photo-1565206077212-4eb48d41f54b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
       pos: "center center",
     },
     {
-      url: "https://res.cloudinary.com/marcos-jampietri/image/upload/c_scale,w_800/v1656456621/IMG_20220306_141507_bjwraw.jpg",
-      pos: "center center",
+      url: "https://images.unsplash.com/photo-1622976367840-1803861fff6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1315&q=80",
+      pos: "center 80%",
     },
     {
-      url: "https://res.cloudinary.com/marcos-jampietri/image/upload/v1656456630/vaso_e_roma_33_tmpqjt.jpg",
+      url: "https://images.unsplash.com/photo-1532140588319-cfd0b67af829?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2330&q=80",
       pos: "center center",
     },
   ];
-
-  useEffect(() => {
-    setshow(true);
-  }, []);
 
   useEffect(() => {
     if (auto) {
@@ -51,67 +43,18 @@ const Hero = () => {
     setTimeout(setDisable, 1200);
   }
 
+  const VW = window.innerWidth;
+  const prevPic = usePrevious(picIndex);
+  const reverse = prevPic! > picIndex;
+
   const slidePic = useTransition(picIndex, {
-    key: picIndex,
-    from: {
-      // transform: "translate3d(100vw, 0vh,0)",
-      opacity: 0,
-    },
-    enter: {
-      // transform: "translate3d(0vw,0vh,0)",
-      opacity: 1,
-    },
-    leave: {
-      // transform: "translate3d(-100vw,0vh,0)",
-      opacity: 1,
-    },
+    from: { opacity: 1, x: reverse ? -VW : VW },
+    enter: { opacity: 1, x: 0 },
+    leave: { opacity: 1, x: reverse ? VW : -VW },
+    config: config.slow,
   });
 
   const { scrollTo }: any = useScrollTo(config.slow);
-
-  const prev = () => {
-    if (picIndex == 0) {
-      null;
-    } else {
-      setpicIndex((state) => (state - 1) % backPic.length);
-    }
-  };
-  const next = () => {
-    setpicIndex((state) => (state + 1) % backPic.length);
-  };
-
-  const titleTrail = `MEET_THE_ULTIMATE_-ONLINE_SHOPPING_EXPERIENCE`;
-  const titleTrail1 = `MOST_BEAUTIFUL`;
-  const titleTrail2 = `SHOP_EVER`;
-  // const line1 = "Ceramics_Inspired_By_Places_And_The_Simplest_Forms_Of_Nature";
-  const line1 = "Getting_Rid_Of_Shopify_Fees_And_Your_Current_Plataform_Costs";
-  {
-    /* const text = Array.from("the_best_online_shop_you_ve_ever_seen"); */
-  }
-
-  interface trailProps {
-    position?: number;
-  }
-
-  const conf = { tension: 650, friction: 15, frequency: 0.3 };
-
-  const configs1 = {
-    config: conf,
-    opacity: show ? 1 : 0,
-    x: show ? 0 : 30,
-    delay: 0,
-  };
-
-  const configs2 = {
-    config: conf,
-    opacity: show ? 1 : 0,
-    y: show ? 0 : -10,
-    delay: 0,
-  };
-
-  const line1Trail = useTrail<trailProps>(line1.length, configs1);
-  const tTrail1 = useTrail<trailProps>(titleTrail1.length, configs2);
-  const tTrail2 = useTrail<trailProps>(titleTrail2.length, configs2);
 
   return (
     <Section role="hero">
@@ -131,10 +74,20 @@ const Hero = () => {
             }}
           />
         ))}
+        <div
+          style={{
+            position: "absolute",
+            boxShadow: "inset 2px 2px 25px hsla(0, 0%, 0%, 0.5)",
+            width: "200%",
+            height: "100%",
+          }}
+        />
 
         <ButtonP
           onClick={() => {
-            prev();
+            picIndex == 0
+              ? setpicIndex(backPic.length - 1)
+              : setpicIndex((state) => (state - 1) % backPic.length);
             setDisable(true);
             setauto(false);
           }}
@@ -144,7 +97,7 @@ const Hero = () => {
         </ButtonP>
         <ButtonN
           onClick={() => {
-            next();
+            setpicIndex((state) => (state + 1) % backPic.length);
             setDisable(true);
             setauto(false);
           }}
@@ -165,69 +118,13 @@ const Hero = () => {
           ))}
         </Dots>
       </div>
-
-      {/* <TextWrap onClick={() => setshow(!show)}>
-        <div>
-          {tTrail1.map(({ y, ...otherProps }, i) => (
-            <Title
-              key={i}
-              style={{
-                ...otherProps,
-                transform: y.to((y: any) => `translate3d(0, ${y}vh, 0)`),
-                marginTop: "0.6em",
-              }}
-            >
-              {titleTrail1[i] !== "_" ? (
-                titleTrail1[i].replace(/-/g, ``)
-              ) : (
-                <div style={{ color: "transparent" }}>&nbsp;</div>
-              )}
-            </Title>
-          ))}
-        </div>
-        <div>
-          {tTrail2.map(({ y, ...otherProps }, i) => (
-            <Title
-              key={i}
-              style={{
-                ...otherProps,
-                transform: y.to((y: any) => `translate3d(0, ${y}vh, 0)`),
-                marginBottom: "0.2em",
-              }}
-            >
-              {titleTrail2[i] !== "_" ? (
-                titleTrail2[i].replace(/-/g, ``)
-              ) : (
-                <div style={{ color: "transparent" }}>&nbsp;</div>
-              )}
-            </Title>
-          ))}
-        </div>
-        <div>
-          {line1Trail.map(({ x, ...otherProps }, i) => (
-            <Call
-              key={i}
-              style={{
-                ...otherProps,
-                transform: x.to((x: any) => `translate3d( ${x}vw, 0, 0)`),
-              }}
-            >
-              {line1[i] !== "_" ? (
-                line1[i]
-              ) : (
-                <div style={{ color: "transparent" }}>&nbsp;</div>
-              )}
-            </Call>
-          ))}
-        </div>
-      </TextWrap> */}
       <CTAWrap>
         <CTA onClick={() => scrollTo(document.querySelector("#New-Items"))}>
           START SHOPPING
         </CTA>
       </CTAWrap>
 
-      {slidePic((styles, index) => (
+      {/* {slidePic((styles, index) => (
         <Overlay>
           <animated.div
             style={{
@@ -237,7 +134,7 @@ const Hero = () => {
             }}
           />
         </Overlay>
-      ))}
+      ))} */}
     </Section>
   );
 };
@@ -292,9 +189,6 @@ const Carroussel = styled(animated.div)`
   height: 50vh;
 
   background-size: cover;
-  background-position: left top;
-  background-blend-mode: screen;
-  box-shadow: inset 2px 2px 15px hsla(0, 0%, 0%, 0.5);
 `;
 
 const CTAWrap = styled.div`
@@ -380,7 +274,7 @@ const Button = styled.button`
   }
 `;
 const ButtonN = styled(Button)`
-  bottom: 15px;
+  bottom: 45%;
   z-index: 3;
   right: 15px;
 
@@ -391,7 +285,7 @@ const ButtonN = styled(Button)`
   // }
 `;
 const ButtonP = styled(Button)`
-  bottom: 15px;
+  bottom: 45%;
   z-index: 3;
   left: 15px;
   // svg {

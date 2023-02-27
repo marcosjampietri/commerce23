@@ -15,6 +15,7 @@ const bn = Bebas_Neue({ weight: "400", subsets: ["latin"] });
 import NavBar from "../components/NavBar/";
 import Top from "@/components/General/Top";
 import Menu from "@/components/General/Menu";
+import OrderPanel from "@/components/General/OrderPanel";
 
 function MyApp({ Component, pageProps, router, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -54,6 +55,7 @@ const AppChild = ({ Component, pageProps }: AppProps) => {
         <Top />
         <NavBar />
         <Menu />
+        <OrderPanel />
         <StyledDiv>
           <Transition
             items={items}

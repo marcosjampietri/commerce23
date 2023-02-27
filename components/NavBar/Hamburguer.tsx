@@ -81,16 +81,10 @@ const Wrap = styled.div`
 `;
 
 const Box = styled(animated.div)`
-  position: relative;
-  right: -30px;
   width: 62px;
   height: 47px;
-  margin: 0 5px;
-
-  /* border: 1px inset hsla(348, 100%, 50%, 0.5); */
 
   cursor: pointer;
-
   :hover {
     /* border: 1px inset hsla(340, 0%, 20%, 1); */
     svg {
@@ -113,8 +107,6 @@ const Lines = styled.svg`
 
   transition: 0.8s;
   fill: hsla(35, 25%, 30%, 1);
-
-  viewbox: 0 0 44 44;
 `;
 
 const OneLine = styled(animated.rect)`

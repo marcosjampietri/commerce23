@@ -2,27 +2,29 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "./index";
 
 interface toggleState {
-  // CartOn: boolean;
+  CartOn: boolean;
   NavOn: boolean;
   ModOn: boolean;
+  AllowMod: boolean;
 }
 
 const initialState = {
-  // CartOn: false,
+  CartOn: false,
   NavOn: false,
   ModOn: false,
+  AllowMod: true,
 } as toggleState;
 
 const toggleSlice = createSlice({
   name: "toggle",
   initialState,
   reducers: {
-    // cartOnAction(state) {
-    //     state.CartOn = true
-    // },
-    // cartOffAction(state) {
-    //     state.CartOn = false
-    // },
+    cartOnAction(state) {
+      state.CartOn = true;
+    },
+    cartOffAction(state) {
+      state.CartOn = false;
+    },
     navOnAction(state) {
       state.NavOn = true;
     },
@@ -39,7 +41,8 @@ const toggleSlice = createSlice({
 });
 
 export const {
-  // cartOnAction, cartOffAction,
+  cartOnAction,
+  cartOffAction,
   navOnAction,
   navOffAction,
   modOnAction,

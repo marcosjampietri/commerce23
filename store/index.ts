@@ -8,7 +8,6 @@ import thunk from "redux-thunk";
 import users from "./usersSlicer";
 import stepper from "./stepperSlicer";
 import products from "./productsSlicer";
-import mod from "./modSlicer";
 import toggle from "./toggleSlicer";
 import subscription from "./subscriptionSlicer";
 import load from "./loadSlicer";
@@ -19,7 +18,6 @@ const combinedReducer = combineReducers({
   toggle,
   stepper,
   load,
-  mod,
   products,
   cart,
   subscription,
