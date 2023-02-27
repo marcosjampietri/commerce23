@@ -11,8 +11,8 @@ import {
 
 import styled from "styled-components";
 import BezierEasing from "bezier-easing";
-import { useTypedSelector } from "../store/index";
-import { navOnAction, navOffAction, selectToggle } from "../store/toggleSlicer";
+import { useTypedSelector } from "@/store";
+import { navOffAction, selectToggle } from "@/store/toggleSlicer";
 
 const useOutsideAlerter = (ref: React.RefObject<HTMLElement>) => {
   const dispatch = useDispatch();

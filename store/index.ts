@@ -12,15 +12,17 @@ import mod from "./modSlicer";
 import toggle from "./toggleSlicer";
 import subscription from "./subscriptionSlicer";
 import load from "./loadSlicer";
+import cart from "./cartSlicer";
 
 const combinedReducer = combineReducers({
   users,
-  products,
-  stepper,
-  mod,
   toggle,
-  subscription,
+  stepper,
   load,
+  mod,
+  products,
+  cart,
+  subscription,
 });
 
 const masterReducer = (state: any, action: any) => {

@@ -5,7 +5,6 @@ import jwt, { Secret } from "jsonwebtoken";
 import user from "../../../server/models/userModel";
 import { connectToMongo } from "../../../server/index";
 import { serialize } from "cookie";
-import { userInfoType } from "../../../types";
 
 export default async function register(
   req: NextApiRequest,

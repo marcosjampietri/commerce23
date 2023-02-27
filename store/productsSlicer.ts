@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import { Product } from "../types/product";
+import { Product } from "../types/product";
 import { AppState } from "./index";
 import axios from "axios";
 
 export interface ProductsState {
-  list: any[];
+  list: Product[];
   loading: boolean;
 }
 

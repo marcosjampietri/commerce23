@@ -15,7 +15,7 @@ import {
 
 import { BsWhatsapp } from "react-icons/bs";
 
-import { below } from "../styles/breakpoints";
+import { below } from "../../styles/breakpoints";
 {
   /* import { Reveal } from "../reveal"; */
 }
@@ -83,8 +83,13 @@ const Footer = () => {
       <Margin>
         <Main>
           <Logo>
-            {/* <Image src="/logo.svg" width="80" height="55" alt="logo" /> */}
-            HANNAH LOGO
+            <Image
+              src="./next.svg"
+              width={50}
+              height={50}
+              alt={"logo"}
+              style={{ background: "white", padding: "5px" }}
+            />
           </Logo>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           <Social>

@@ -1,8 +1,8 @@
 import { NextFetchEvent, NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
-import { productsList } from "./server/products";
-import type { user } from "./server/models/userModel";
+
+// import type { user } from "./server/models/userModel";
 
 export async function middleware(req: NextRequest, event: NextFetchEvent) {
   const secret = process.env["JWT_TOKEN_SECRET"];
@@ -10,9 +10,9 @@ export async function middleware(req: NextRequest, event: NextFetchEvent) {
 
   const daCookie = c && c!.value;
 
-  const dynamicPath = productsList.find(
-    ({ id }) => `/paid/product/${id}/` == req.nextUrl.pathname
-  );
+  // const dynamicPath = productsList.find(
+  //   ({ id }) => `/paid/product/${id}/` == req.nextUrl.pathname
+  // );
 
   if (req.nextUrl.pathname.startsWith("/login")) {
     if (daCookie) {
@@ -31,59 +31,61 @@ export async function middleware(req: NextRequest, event: NextFetchEvent) {
       console.log("doesnt have cookie");
       return NextResponse.next();
     }
-  } else if (
-    req.nextUrl.pathname.startsWith(`/paid/product/${dynamicPath?.id}`)
-  ) {
-    if (!daCookie) {
-      console.log("doesnt have paidcookie and tried paid page");
-      return NextResponse.redirect(new URL("/login", req.url));
-    } else {
-      try {
-        const { payload } = await jwtVerify(
-          daCookie,
-          new TextEncoder().encode(secret)
-        );
+  }
+  // else if (
+  //   req.nextUrl.pathname.startsWith(`/paid/product/${dynamicPath?.id}`)
+  // ) {
+  //   if (!daCookie) {
+  //     console.log("doesnt have paidcookie and tried paid page");
+  //     return NextResponse.redirect(new URL("/login", req.url));
+  //   } else {
+  //     try {
+  //       const { payload } = await jwtVerify(
+  //         daCookie,
+  //         new TextEncoder().encode(secret)
+  //       );
 
-        const url =
-          process.env["NODE_ENV"] === "development"
-            ? "http://localhost:3000"
-            : "https://authsys.vercel.app";
-        const userUrl = () => `${url}/api/users/user`;
+  //       const url =
+  //         process.env["NODE_ENV"] === "development"
+  //           ? "http://localhost:3000"
+  //           : "https://authsys.vercel.app";
+  //       const userUrl = () => `${url}/api/users/user`;
 
-        // console.log("URL usada na API", userUrl());
+  //       // console.log("URL usada na API", userUrl());
 
-        const res = await fetch(userUrl(), {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: JSON.stringify({ _id: payload._id }),
-        });
+  //       const res = await fetch(userUrl(), {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           // 'Content-Type': 'application/x-www-form-urlencoded',
+  //         },
+  //         body: JSON.stringify({ _id: payload._id }),
+  //       });
 
-        const dbUser: user = await res.json();
+  //       const dbUser: user = await res.json();
 
-        // console.log("usuário recuperado", dbUser);
+  //       // console.log("usuário recuperado", dbUser);
 
-        const subscription = await dbUser.stripe.subscriptions.find(
-          ({ name }) => `/paid/product/${name}/` == req.nextUrl.pathname
-        );
+  //       const subscription = await dbUser.stripe.subscriptions.find(
+  //         ({ name }) => `/paid/product/${name}/` == req.nextUrl.pathname
+  //       );
 
-        const accessToken = <string>subscription?.access;
+  //       const accessToken = <string>subscription?.access;
 
-        const { payload: PL } = await jwtVerify(
-          accessToken,
-          new TextEncoder().encode(secret)
-        );
-        console.log("payload do token do produto", PL);
-        console.log("has valid paidcookie and access to product");
-        return NextResponse.next();
-      } catch (error) {
-        console.log("has invalid/expired cookie and tried product");
-        return NextResponse.redirect(new URL("/payment", req.url));
-      }
-    }
-  } else {
+  //       const { payload: PL } = await jwtVerify(
+  //         accessToken,
+  //         new TextEncoder().encode(secret)
+  //       );
+  //       console.log("payload do token do produto", PL);
+  //       console.log("has valid paidcookie and access to product");
+  //       return NextResponse.next();
+  //     } catch (error) {
+  //       console.log("has invalid/expired cookie and tried product");
+  //       return NextResponse.redirect(new URL("/payment", req.url));
+  //     }
+  //   }
+  // }
+  else {
     if (!daCookie) {
       console.log("doesnt have cookie and tried protected page");
       return NextResponse.redirect(new URL("/login", req.url));
@@ -105,13 +107,5 @@ export async function middleware(req: NextRequest, event: NextFetchEvent) {
 }
 
 export const config = {
-  matcher: [
-    "/protected/:path*",
-    "/login/:path*",
-    "/payment/:path*",
-    "/course/:path*",
-    "/paid/:path*",
-    "/dashboard/:path*",
-    "/forum/:path*",
-  ],
+  matcher: ["/login/:path*", "/payment/:path*", "/dashboard/:path*"],
 };

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { animated, useTransition, useSpring, config } from "react-spring";
 import { RiDoubleQuotesR } from "react-icons/ri";
 import { useDrag } from "@use-gesture/react";
-import { Margin } from "../styles/globalSC";
-import usePrevious from "./usePrevious";
+import { Margin } from "../../styles/globalSC";
+import usePrevious from "../Hooks/usePrevious";
 
 const Testimonials = () => {
   const [testIndex, settestIndex] = useState(0);

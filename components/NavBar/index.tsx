@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import styled from "styled-components";
 import { animated } from "react-spring";
 
@@ -15,7 +16,13 @@ const NavBar = () => {
             href="/"
             style={{ fontWeight: "900", color: "hsla(35, 25%, 30%, 1)" }}
           >
-            LOGO
+            <Image
+              src="./next.svg"
+              width={50}
+              height={50}
+              alt={"logo"}
+              style={{ background: "lightgrey", padding: "5px" }}
+            />
           </Link>
           {/* <Link href="/about" style={{ fontWeight: "900", color: "white" }}>
             ABOUT
