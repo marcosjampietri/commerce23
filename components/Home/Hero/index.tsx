@@ -50,18 +50,31 @@ const Hero = () => {
           position: "relative",
           width: "100vw",
           height: "50vh",
+          maxWidth: "1600px",
+          margin: "0px auto",
         }}
       >
-        {slidePic((styles, index) => (
-          <Carroussel
-            style={{
-              ...styles,
-              backgroundImage: `url(${backPic[index].url})`,
-              backgroundPosition: `${backPic[index].pos}`,
-            }}
-          />
-        ))}
-        <Shadow />
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "50vh",
+            overflow: "hidden",
+          }}
+        >
+          {slidePic((styles, index) => (
+            <Carroussel
+              style={{
+                ...styles,
+                backgroundImage: `url(${backPic[index].url})`,
+                backgroundPosition: `${backPic[index].pos}`,
+              }}
+            />
+          ))}
+          <Shadow />
+          <LateralL />
+          <LateralR />
+        </div>
 
         <ButtonP
           onClick={() => {
@@ -136,33 +149,6 @@ const Section = styled.section`
   align-items: center;
 `;
 
-const Overlay = styled(animated.div)`
-  position: absolute;
-  width: 80vw;
-  height: 80vh;
-  top: 80px;
-
-  opacity: 0.8;
-  filter: drop-shadow(-1px 6px 10px hsla(0, 0%, 0%, 0.2));
-
-  div {
-    clip-path: polygon(
-      0% 0%,
-      0% 100%,
-      3% 100%,
-      3% 3%,
-      97% 3%,
-      97% 97%,
-      3% 97%,
-      3% 100%,
-      100% 100%,
-      100% 0%
-    );
-    width: 100%;
-    height: 100%;
-  }
-`;
-
 const Carroussel = styled(animated.div)`
   position: absolute;
   width: 100%;
@@ -173,10 +159,27 @@ const Carroussel = styled(animated.div)`
 
 const Shadow = styled.div`
   position: absolute;
+  right: 0px;
   box-shadow: inset 2px 2px 25px hsla(0, 0%, 0%, 0.5);
-  width: 200%;
+  width: 100%;
   height: 100%;
-  transform: translateX(-20%);
+  /* transform: translateX(-20%); */
+`;
+const Lateral = styled.div`
+  position: absolute;
+  width: 15vw;
+  height: 100%;
+`;
+const LateralL = styled(Lateral)`
+  left: -2px;
+  background-image: linear-gradient(90deg, white 50%, transparent);
+  /* background-color: white; */
+`;
+const LateralR = styled(Lateral)`
+  right: -2px;
+  border-right: 5px solid white;
+  background-image: linear-gradient(270deg, white 50%, transparent);
+  /* background-color: white; */
 `;
 
 const CTAWrap = styled.div`
@@ -282,53 +285,29 @@ const ButtonP = styled(Button)`
   //     left: -1px;
   // }
 `;
-
-const TextWrap = styled.div`
+const Overlay = styled(animated.div)`
   position: absolute;
-  width: 100vw;
+  width: 80vw;
+  height: 80vh;
+  top: 80px;
 
-  background: hsla(0, 0%, 100%, 0.3);
-  backdrop-filter: blur(10px);
-  box-shadow: 2px 2px 15px hsla(0, 0%, 0%, 0.2);
-  z-index: 2;
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  opacity: 0.8;
+  filter: drop-shadow(-1px 6px 10px hsla(0, 0%, 0%, 0.2));
 
   div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-
-const Call = styled(animated.h2)`
-  color: hsla(0, 0%, 30%, 1);
-  font-size: clamp(8px, 2.2vw, 18px);
-  letter-spacing: 0.04em;
-  line-height: 0.8em;
-  font-weight: 200;
-`;
-
-const Title = styled(animated.h1)`
-  height: 0.8em;
-  margin: 15px 0px 10px;
-
-  color: hsla(0, 0%, 10%, 1);
-
-  font-size: clamp(18px, 5vw, 45px);
-  letter-spacing: 0.05em;
-  font-weight: bold;
-  line-height: 0.5em;
-
-  ${below.small`
-    font-size: clamp(12px, 5vw, 50px);
-        
-    `};
-
-  div {
+    clip-path: polygon(
+      0% 0%,
+      0% 100%,
+      3% 100%,
+      3% 3%,
+      97% 3%,
+      97% 97%,
+      3% 97%,
+      3% 100%,
+      100% 100%,
+      100% 0%
+    );
+    width: 100%;
+    height: 100%;
   }
 `;
