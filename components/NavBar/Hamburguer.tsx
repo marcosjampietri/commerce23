@@ -77,7 +77,9 @@ const Burger = () => {
 export default Burger;
 
 const Wrap = styled.div`
-  transform: scale(0.7);
+  position: relative;
+  top: 5px;
+  transform: scale(0.8);
 `;
 
 const Box = styled(animated.div)`

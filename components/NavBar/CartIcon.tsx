@@ -39,7 +39,7 @@ export default CartIcon;
 
 const Wrap = styled.div`
   position: relative;
-  top: -3px;
+  top: -2px;
   width: 50px;
   height: 50px;
 `;
@@ -52,6 +52,7 @@ const Number = styled.div`
   height: 45%;
 
   color: white;
+  font-weight: 900;
   background-color: hsla(360, 100%, 50%, 0);
   border-radius: 50%;
   transition: 1s;

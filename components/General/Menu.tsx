@@ -176,7 +176,7 @@ const Div = styled.div`
 
 const H2 = styled.h2`
   font-size: clamp(30px, 10vw, 70px);
-  font-family: Montserrat;
+  /* font-family: Montserrat; */
   margin: 20px;
   font-weight: 100;
 `;

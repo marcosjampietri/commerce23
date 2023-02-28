@@ -20,8 +20,6 @@ const OrderPanel = () => {
   const { userInfo } = useTypedSelector(selectUsers);
   const { CartOn } = useTypedSelector(selectToggle);
 
-  const tudao: number = itemsTotal * 1 + 5.99 * 1;
-
   let deliverTo: any = null;
 
   if (userInfo && userInfo.addresses?.length > 0) {
@@ -31,10 +29,9 @@ const OrderPanel = () => {
 
   const toggleCart = useTransition(CartOn, {
     from: { opacity: 0.3, right: "-30vw" },
-    enter: { opacity: 1, right: "1vw" },
+    enter: { opacity: 1, right: "0.5vw" },
     leave: { opacity: 0, right: "-30vw" },
     // reverse: CartOn,
-
     delay: 0,
     config: config.slow,
   });
@@ -106,7 +103,7 @@ const OrderPanel = () => {
 
               <Row>
                 <h5>BASKET TOTAL:</h5>
-                <h5>£{tudao}</h5>
+                <h5>£{itemsTotal}</h5>
               </Row>
             </Totals>
             <Link
@@ -142,7 +139,7 @@ export default OrderPanel;
 
 const Panel = styled(animated.div)`
   position: fixed;
-  top: 1vw;
+  top: 0.5vw;
   right: -100vw;
   width: 80vw;
   max-width: 500px;
@@ -150,7 +147,7 @@ const Panel = styled(animated.div)`
   padding: 10px;
 
   background: white;
-  box-shadow: 1px 1px 15px hsla(240, 50%, 0%, 0.5);
+  box-shadow: -5px -5px 35px hsla(240, 50%, 0%, 0.5);
   border-radius: 5px;
 
   z-index: 15;

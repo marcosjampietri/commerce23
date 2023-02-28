@@ -159,7 +159,7 @@ const Title = styled(animated.div)`
     margin: 0 auto;
     font-size: clamp(27px, 5vw, 40px);
     font-weight: 600;
-    font-family: Montserrat;
+    /* font-family: Montserrat; */
     color: hsla(35, 25%, 40%, 1);
   }
 
@@ -200,7 +200,7 @@ const Carroussel = styled(animated.div)`
     // padding: 0px 10px;
 
     margin-bottom: 20px;
-    font-family: Montserrat, Sans-Serif;
+    /* font-family: Montserrat, Sans-Serif; */
     font-weight: 300;
     font-size: clamp(16px, 2vw, 22px);
     text-align: justify;
@@ -229,7 +229,7 @@ const Carroussel = styled(animated.div)`
       max-width: 800px;
       padding: 0px 15px;
 
-      font-family: Montserrat, Sans-Serif;
+      /* font-family: Montserrat, Sans-Serif; */
       font-weight: 400;
       font-size: 18px;
       letter-spacing: 0px;

@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
+import { below } from "@/styles/breakpoints";
 
 const Logo = () => {
   return (
@@ -14,6 +15,10 @@ const Logo = () => {
 export default Logo;
 
 const Icon = styled(Link)`
+  position: absolute;
+  left: 50vw;
+  top: 22px;
+  transform: translateX(-50%);
   img {
     width: 100px;
     height: 100%;
@@ -22,4 +27,6 @@ const Icon = styled(Link)`
     cursor: pointer;
     filter: drop-shadow(0px 0px 50px hsla(340, 100%, 70%, 0.3));
   }
+
+  ${below.small`display: none;`}
 `;

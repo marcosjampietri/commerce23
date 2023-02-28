@@ -7,10 +7,10 @@ import { GlobalStyle } from "../styles/globalSC";
 import { useRouter } from "next/router";
 import { Transition, animated, config } from "react-spring";
 import styled from "styled-components";
-import { Montserrat, Bebas_Neue } from "@next/font/google";
+import { Montserrat, Poppins } from "next/font/google";
 
 const ms = Montserrat({ subsets: ["latin"] });
-const bn = Bebas_Neue({ weight: "400", subsets: ["latin"] });
+const pp = Poppins({ weight: "200", subsets: ["latin"] });
 
 import NavBar from "../components/NavBar/";
 import Top from "@/components/General/Top";
@@ -71,8 +71,8 @@ const AppChild = ({ Component, pageProps }: AppProps) => {
         </WrapLoader>
       ) : null}
       <GlobalStyle />
-      <NextChild className={`${ms.className}`}>
-        {/* <NextChild className={`${ms.className} ${bn.className}`}> */}
+      <NextChild className={`${pp.className}`}>
+        {/* <NextChild className={`${ms.className} ${pp.className}`}> */}
         <Top />
         <NavBar />
         <Menu />

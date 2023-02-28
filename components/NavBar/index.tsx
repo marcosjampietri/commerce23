@@ -41,7 +41,6 @@ const Nav = styled.nav`
   z-index: 14;
   transition: 0.5s;
   backdrop-filter: blur(3px);
-  font-family: Modena Sans;
 
   :hover {
     transition: 0.2s;

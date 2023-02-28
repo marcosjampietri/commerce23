@@ -131,7 +131,7 @@ const Section = styled.footer`
   background: hsla(0, 0%, 10%, 1);
 
   h2 {
-    font-family: Montserrat;
+    /* font-family: Montserrat; */
   }
 
   display: flex;
@@ -156,7 +156,6 @@ const List = styled.div`
   padding: 20px;
 
   h2 {
-    font-family: Bebas Neue;
     letter-spacing: 2px;
     font-size: 25px;
     line-height: 1.5em;
