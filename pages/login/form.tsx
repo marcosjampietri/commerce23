@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
+import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { animated, useTransition, config } from "react-spring";
 import { MdAccountCircle, MdEmail } from "react-icons/md";
@@ -12,7 +13,6 @@ import { registerUser, loginUser, selectUsers } from "@/store/usersSlicer";
 import { AppDispatch } from "@/store/index";
 import { useTypedSelector } from "@/store/index";
 import { selectload, setSubmitting } from "@/store/loadSlicer";
-import { validationSchemaLogin, validationSchemaRegister } from "./validations";
 
 type Inputs = {
   name: string;
@@ -31,6 +31,32 @@ const FormComponent = ({ reg }: any) => {
     const change = !userLoading && submitting && !errorMsg;
     console.log(change);
   }, [userLoading, errorMsg, submitting]);
+
+  const validationSchemaRegister = Yup.object().shape({
+    name: Yup.string().required("Name is required, Mr. X 🤪"),
+    email: Yup.string()
+      .required("Email is required 😅")
+      .email("Email is invalid 🧐"),
+    password: Yup.string()
+      .min(3, "Password must be at least 3 characters long 😒")
+      .required("Password is required 😅"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), undefined], "Passwords must match 🧐 !!")
+      .required("Confirm Password is required too. Don't forget 😊"),
+    acceptTerms: Yup.bool().oneOf(
+      [true],
+      "Hey! you need to accept the terms to register 😁"
+    ),
+  });
+
+  const validationSchemaLogin = Yup.object().shape({
+    email: Yup.string()
+      .required("Email is required 😅")
+      .email("Email is invalid 🧐"),
+    password: Yup.string()
+      .min(3, "Password must be at least 3 characters long 😒")
+      .required("Password is required 😅"),
+  });
 
   const formOptions = {
     resolver: yupResolver(
