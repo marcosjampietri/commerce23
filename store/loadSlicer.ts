@@ -2,30 +2,33 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "./index";
 
 interface loadState {
-  complete: boolean;
+  submitting: boolean;
 }
 
 const initialState = {
-  complete: false,
-  loading: false,
+  submitting: false,
+  // loading: false,
 } as loadState;
 
 const loadSlice = createSlice({
   name: "load",
   initialState,
   reducers: {
-    setComplete(state, { payload }) {
-      state.complete = payload;
+    setSubmitting(state, { payload }) {
+      state.submitting = payload;
     },
-    setLoading: (state, { payload }) => {
-      return {
-        ...state,
-        loading: payload,
-      };
-    },
+    // setLoading: (state, { payload }) => {
+    //   return {
+    //     ...state,
+    //     loading: payload,
+    //   };
+    // },
   },
 });
 
-export const { setComplete, setLoading } = loadSlice.actions;
+export const {
+  setSubmitting,
+  // setLoading
+} = loadSlice.actions;
 export const selectload = (state: AppState) => state.load;
 export default loadSlice.reducer;

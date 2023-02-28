@@ -189,7 +189,7 @@ export const usersSlice = createSlice({
         userInfo: null,
         errorMsg: "",
         activeAddress: 0,
-        complete: false,
+        // complete: false,
       };
     });
     builder.addCase(logoutUser.rejected, (state, action) => {

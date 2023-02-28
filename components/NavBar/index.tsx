@@ -9,6 +9,7 @@ import Burguer from "./Hamburguer";
 import CartIcon from "./CartIcon";
 import UserIcon from "./UserIcon";
 import { Margin } from "@/styles/globalSC";
+import Logo from "./Logo";
 
 const NavBar = () => {
   return (
@@ -16,18 +17,7 @@ const NavBar = () => {
       <Nav>
         <Margin style={{ justifyContent: "space-between" }}>
           <Burguer />
-          <Logo
-            href="/"
-            style={{ fontWeight: "900", color: "hsla(35, 25%, 30%, 1)" }}
-          >
-            <Image
-              src="./next.svg"
-              width={50}
-              height={50}
-              alt={"logo"}
-              style={{ background: "lightgrey", padding: "5px" }}
-            />
-          </Logo>
+          <Logo />
           <div style={{ display: "flex" }}>
             <UserIcon />
             <CartIcon />
@@ -60,27 +50,4 @@ const Nav = styled.nav`
 
   display: flex;
   align-items: center;
-`;
-
-const Div = styled.div`
-  max-width: 1200px;
-  width: 100%;
-  margin: 10px auto;
-
-  display: flex;
-  justify-content: end;
-  align-items: center;
-
-  a {
-    color: hsla(38, 100%, 60%, 1);
-  }
-`;
-
-const Logo = styled(Link)`
-  width: 100px;
-  height: 100%;
-
-  background: transparent;
-  cursor: pointer;
-  filter: drop-shadow(0px 0px 50px hsla(340, 100%, 70%, 0.3));
 `;

@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
-import storage from "redux-persist/lib/storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 
@@ -44,17 +44,36 @@ const masterReducer = (state: any, action: any) => {
   }
 };
 
-const persistedReducer = persistReducer(
-  { key: "root", storage },
-  masterReducer
-);
+const makeStore = () => {
+  if (typeof window === "undefined") {
+    //If it's on server side, create a store
+    return configureStore({
+      reducer: masterReducer,
+      devTools: process.env.NODE_ENV !== "production",
+      middleware: [thunk],
+    });
+  } else {
+    //If it's on client side, create a store which will persist
+    const persistedReducer = persistReducer(
+      {
+        key: "root",
+        storage: AsyncStorage,
+        blacklist: ["toggle", "load"],
+      },
+      masterReducer
+    ); // Create a new reducer with our existing reducer
 
-export const makeStore = () =>
-  configureStore({
-    reducer: persistedReducer,
-    // devTools: true,
-    middleware: [thunk],
-  });
+    const store: any = configureStore({
+      reducer: persistedReducer,
+      devTools: process.env.NODE_ENV !== "production",
+      middleware: [thunk],
+    }); // Creating the store again
+
+    store.__persistor = persistStore(store); // This creates a persistor object & push that persisted object to .__persistor, so that we can avail the persistability feature
+
+    return store;
+  }
+};
 
 export const store = makeStore();
 

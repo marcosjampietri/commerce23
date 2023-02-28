@@ -4,27 +4,14 @@ import { animated, useTransition, config, useTrail } from "react-spring";
 import useScrollTo from "react-spring-scroll-to-hook";
 import { below } from "@/styles/breakpoints";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import usePrevious from "../Hooks/usePrevious";
+
+import usePrevious from "../../Hooks/usePrevious";
+import backPic from "./pics";
 
 const Hero = () => {
   const [picIndex, setpicIndex] = useState(0);
   const [auto, setauto] = useState(false);
   const [disable, setDisable] = useState(false);
-
-  const backPic = [
-    {
-      url: "https://images.unsplash.com/photo-1565206077212-4eb48d41f54b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
-      pos: "center center",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1622976367840-1803861fff6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1315&q=80",
-      pos: "center 80%",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1532140588319-cfd0b67af829?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2330&q=80",
-      pos: "center center",
-    },
-  ];
 
   useEffect(() => {
     if (auto) {
@@ -74,14 +61,7 @@ const Hero = () => {
             }}
           />
         ))}
-        <div
-          style={{
-            position: "absolute",
-            boxShadow: "inset 2px 2px 25px hsla(0, 0%, 0%, 0.5)",
-            width: "200%",
-            height: "100%",
-          }}
-        />
+        <Shadow />
 
         <ButtonP
           onClick={() => {
@@ -189,6 +169,14 @@ const Carroussel = styled(animated.div)`
   height: 50vh;
 
   background-size: cover;
+`;
+
+const Shadow = styled.div`
+  position: absolute;
+  box-shadow: inset 2px 2px 25px hsla(0, 0%, 0%, 0.5);
+  width: 200%;
+  height: 100%;
+  transform: translateX(-20%);
 `;
 
 const CTAWrap = styled.div`

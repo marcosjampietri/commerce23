@@ -1,51 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NextLink from "next/link";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { BiUser } from "react-icons/bi";
-import { useTypedSelector } from "../../store/index";
+import { AppDispatch, useTypedSelector } from "../../store/index";
 
-import { selectUsers } from "@/store/usersSlicer";
+import { logoutUser, selectUsers } from "@/store/usersSlicer";
 import Modal from "./Modal";
 import { modOffAction, modOnAction, selectToggle } from "@/store/toggleSlicer";
+import { selectload, setSubmitting } from "@/store/loadSlicer";
 
 const UserIcon = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
-  const { userInfo } = useTypedSelector(selectUsers);
   const { ModOn } = useTypedSelector(selectToggle);
+  const { userInfo } = useTypedSelector(selectUsers);
+  const { submitting } = useTypedSelector(selectload);
 
-  const onClick = () => {
+  const openMod = () => {
     userInfo ? dispatch(modOnAction()) : router.push("/login");
+  };
+
+  const onLogout = () => {
+    dispatch(logoutUser());
+    dispatch(setSubmitting(true));
   };
 
   return (
     <>
       <Log>
         <div>
-          <User onClick={onClick}>
+          <User onClick={openMod}>
             <Icon>
               <BiUser />
             </Icon>
-            {userInfo && <div>{userInfo.name}</div>}
+            {userInfo && !submitting && <div>{userInfo.name}</div>}
           </User>
         </div>
 
         {ModOn && (
           <Modal>
             <UImenu onClick={() => dispatch(modOffAction())}>
-              <Profile onClick={() => router.push(`/profile/${userInfo._id}`)}>
+              <Profile onClick={() => router.push(`/dashboard`)}>
                 PROFILE
               </Profile>
-              <LogOut
-              // onClick={() => {
-              //   signOut();
-              //   dispatch(logOut());
-              // }}
-              >
-                LOGOUT
-              </LogOut>
+              <LogOut onClick={onLogout}>LOGOUT</LogOut>
             </UImenu>
           </Modal>
         )}

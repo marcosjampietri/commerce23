@@ -9,8 +9,6 @@ export interface user extends Document {
   encryptPassword: any;
   validatePassword: any;
   stripe: { id: string; subscriptions: [{ name: string; access: string }] };
-  activity?: any;
-  extra?: any;
   address?: Object[];
   orders?: Object[];
 }
@@ -25,20 +23,12 @@ const userSchema: Schema = new Schema({
     required: true,
     unique: true,
   },
-
   password: {
     type: String,
     required: true,
   },
   address: {
     type: [Object],
-    required: false,
-  },
-  activity: {
-    liked: { type: Array, required: false },
-  },
-  extra: {
-    type: Object,
     required: false,
   },
   stripe: {

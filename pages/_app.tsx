@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { wrapper, persistor } from "../store/";
+import { wrapper, persistor, useTypedSelector, AppDispatch } from "../store/";
 import { Provider, useDispatch } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { GlobalStyle } from "../styles/globalSC";
@@ -16,6 +16,10 @@ import NavBar from "../components/NavBar/";
 import Top from "@/components/General/Top";
 import Menu from "@/components/General/Menu";
 import OrderPanel from "@/components/General/OrderPanel";
+import Loader from "@/components/General/Loader";
+import { selectUsers } from "@/store/usersSlicer";
+import { selectload, setSubmitting } from "@/store/loadSlicer";
+import { useEffect } from "react";
 
 function MyApp({ Component, pageProps, router, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -37,7 +41,7 @@ function MyApp({ Component, pageProps, router, ...rest }: AppProps) {
 
 const AppChild = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const items = [
     {
@@ -47,8 +51,25 @@ const AppChild = ({ Component, pageProps }: AppProps) => {
     },
   ];
 
+  //App reloader
+  const { userLoading, errorMsg } = useTypedSelector(selectUsers);
+  const { submitting } = useTypedSelector(selectload);
+
+  useEffect(() => {
+    if (!userLoading && submitting) {
+      if (!errorMsg) {
+        router.reload();
+      } else dispatch(setSubmitting(false));
+    }
+  }, [userLoading, submitting, errorMsg]);
+
   return (
     <>
+      {submitting && !errorMsg ? (
+        <WrapLoader>
+          <Loader />
+        </WrapLoader>
+      ) : null}
       <GlobalStyle />
       <NextChild className={`${ms.className}`}>
         {/* <NextChild className={`${ms.className} ${bn.className}`}> */}
@@ -108,5 +129,18 @@ const StyledDiv = styled.div`
   height: 100%;
 `;
 
-// export default wrapper.withRedux(MyApp);
+export const WrapLoader = styled.div`
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+
+  background: hsla(0, 0%, 100%, 0.3);
+  backdrop-filter: blur(3px);
+
+  display: grid;
+  place-items: center;
+`;
+
 export default MyApp;
