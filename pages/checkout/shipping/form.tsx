@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 import { MdAccountCircle, MdEmail } from "react-icons/md";
 import { HiLockOpen, HiLockClosed } from "react-icons/hi";
@@ -18,7 +16,6 @@ import {
   Warn,
   Submit,
 } from "../../../pages/login/styles";
-import { selectStep } from "@/store/stepperSlicer";
 import { selectUsers, addAddress } from "@/store/usersSlicer";
 import { review } from "@/store/stepperSlicer";
 import {
@@ -39,10 +36,9 @@ type Inputs = {
 
 const AddressForm = () => {
   const dispatch: any = useDispatch();
-  const router = useRouter();
 
   const { userInfo } = useTypedSelector(selectUsers);
-  const { newAddress, inputAddress } = useTypedSelector(selectAddress);
+  const { inputAddress } = useTypedSelector(selectAddress);
 
   const id = userInfo?._id;
 

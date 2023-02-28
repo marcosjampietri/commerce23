@@ -1,13 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-
 import styled from "styled-components";
 
 import { useTypedSelector } from "@/store/index";
 import { ship, pay } from "@/store/stepperSlicer";
 import { selectUsers } from "@/store/usersSlicer";
-
 import { selectCart } from "@/store/cartSlicer";
 import { BsPencilSquare } from "react-icons/bs";
 import { selectAddress } from "@/store/addressSlicer";

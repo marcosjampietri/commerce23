@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-// const Form = dynamic(() => import("./form"), {
-//   suspense: true,
-// });
-import Form from "./form";
+const Form = dynamic(() => import("./form"), {
+  suspense: true,
+});
+// import Form from "./form";
 import { resetError } from "@/store/usersSlicer";
 
 const Auth = () => {

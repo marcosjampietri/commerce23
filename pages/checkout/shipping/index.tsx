@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import ShippingAddress from "./address";
-import AddressForm from "./form";
+import dynamic from "next/dynamic";
+
 import { selectUsers } from "@/store/usersSlicer";
 import { AppDispatch, useTypedSelector } from "@/store/index";
-import LookUpAddress from "./lookup";
 import {
   newAddressOff,
   newAddressOn,
@@ -13,12 +12,25 @@ import {
   setinputAddress,
 } from "@/store/addressSlicer";
 
+// import ShippingAddress from "./address";
+// import AddressForm from "./form";
+// import LookUpAddress from "./lookup";
+
+const LookUpAddress = dynamic(() => import("./lookup"), {
+  suspense: true,
+});
+const ShippingAddress = dynamic(() => import("./address"), {
+  suspense: true,
+});
+const AddressForm = dynamic(() => import("./form"), {
+  suspense: true,
+});
+
 const ShippingStep = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const { userInfo } = useTypedSelector(selectUsers);
-  const { editSubmission, inputAddress, newAddress } =
-    useTypedSelector(selectAddress);
+  const { inputAddress, newAddress } = useTypedSelector(selectAddress);
 
   useEffect(() => {
     dispatch(newAddressOn());

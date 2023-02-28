@@ -1,11 +1,9 @@
 import NextLink from "next/link";
 import Head from "next/head";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-
 import {
   removeFromCart,
   increaseQty,

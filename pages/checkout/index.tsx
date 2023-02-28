@@ -1,31 +1,31 @@
-import { useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-
-import Shipping from "./shipping/index";
-import Payment from "./payment";
-import Order from "./review";
-
-import styled from "styled-components";
 import { animated, useTransition, config } from "react-spring";
-import { ship, review, pay } from "../../store/stepperSlicer";
-import { AppState, useTypedSelector } from "../../store/index";
-import { selectStep } from "../../store/stepperSlicer";
+import styled from "styled-components";
+import dynamic from "next/dynamic";
+
+import { ship, review, pay } from "@/store/stepperSlicer";
+import { useTypedSelector } from "@/store/index";
+import { selectStep } from "@/store/stepperSlicer";
 import usePrevious from "@/components/Hooks/usePrevious";
-import Stripe from "./stripewrap";
+
+// import Shipping from "./shipping/index";
+// import Order from "./review";
+// import Stripe from "./stripewrap";
+
+const Order = dynamic(() => import("./review"), {
+  suspense: true,
+});
+const Shipping = dynamic(() => import("./shipping/index"), {
+  suspense: true,
+});
+const Stripe = dynamic(() => import("./stripewrap"), {
+  suspense: true,
+});
 
 const Checkout: NextPage = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
-
-  // useEffect(() => {
-  //     if (status !== "authenticated") {
-  //         router.push("/login");
-  //     }
-  // }, [status]);
-
   const { step } = useTypedSelector(selectStep);
 
   const stepComponent = [

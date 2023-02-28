@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import Img from "next/image";
+import { useState } from "react";
 import styled from "styled-components";
 import { animated, useTransition, useSpring, config } from "react-spring";
 import { RiDoubleQuotesR } from "react-icons/ri";
@@ -40,18 +39,14 @@ const Testimonials = () => {
   ];
 
   const prevtestIndex = usePrevious(testIndex);
-  const rev = prevtestIndex! > testIndex;
+  const reverse = prevtestIndex! > testIndex;
+
+  const VW = window.innerWidth;
 
   const transition = useTransition(testIndex, {
-    from: {
-      transform: `translate3d(${rev ? "-" : ""}100vw, 0vh,0)`,
-    },
-    enter: {
-      transform: "translate3d(0vw,0vh,0)",
-    },
-    leave: {
-      transform: `translate3d(${rev ? "" : "-"}100vw, 0vh,0)`,
-    },
+    from: { x: reverse ? -VW : VW },
+    enter: { x: 0 },
+    leave: { x: reverse ? VW : -VW },
     config: config.slow,
   });
 
@@ -193,6 +188,7 @@ const Carroussel = styled(animated.div)`
 
   //background: grey;
   -webkit-user-select: none;
+  user-select: none;
 
   h3 {
     //width: 100%;
@@ -219,7 +215,6 @@ const Carroussel = styled(animated.div)`
 
       border-radius: 50%;
       background: hsla(360, 100%, 50%, 0.1);
-      object-size: cover;
       object-fit: cover;
 
       object-position: center top;

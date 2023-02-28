@@ -1,56 +1,13 @@
-import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
-import { useForm, SubmitHandler } from "react-hook-form";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 import AddressSearch from "react-loqate";
-import { AppDispatch, useTypedSelector } from "@/store";
-import { selectUsers } from "@/store/usersSlicer";
-import {
-  selectAddress,
-  seteditSubmission,
-  setinputAddress,
-} from "@/store/addressSlicer";
-
-type Inputs = {
-  fullname: string;
-  street: string;
-  city: string;
-  postcode: string;
-  country: string;
-};
-
-interface inputAddressType {
-  fullname?: string;
-  Line1?: string;
-  Line2?: string;
-  Line3?: string;
-  City?: string;
-  PostalCode?: string;
-  CountryName?: string;
-}
+import { AppDispatch } from "@/store";
+import { seteditSubmission, setinputAddress } from "@/store/addressSlicer";
 
 const LookUpAddress = () => {
   const dispatch: AppDispatch = useDispatch();
   const loqate = process.env["NEXT_PUBLIC_LOQATE"]!;
-
-  const { userInfo } = useTypedSelector(selectUsers);
-  const { inputAddress } = useTypedSelector(selectAddress);
-
-  console.log(inputAddress);
-
-  // useEffect(() => {
-  //   if (userInfo?.addresses?.length > 0) setinputAddress(false);
-  // }, [userInfo]);
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-    reset,
-  } = useForm<Inputs>();
 
   const AddressSearchInput = (props: any): JSX.Element => {
     return (
@@ -70,7 +27,6 @@ const LookUpAddress = () => {
         countries={["GB"]}
         components={{ Input: AddressSearchInput }}
         onSelect={(address) => {
-          reset();
           dispatch(setinputAddress(address));
           dispatch(seteditSubmission(true));
         }}

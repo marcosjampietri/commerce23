@@ -1,13 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
-import {
-  animated,
-  useSpring,
-  useTrail,
-  useTransition,
-  config,
-} from "react-spring";
+import { animated, useTransition } from "react-spring";
 
 import styled from "styled-components";
 import BezierEasing from "bezier-easing";
@@ -83,23 +77,23 @@ const Menu = () => {
   useOutsideAlerter(wrapperRef);
 
   const easing = BezierEasing(0.95, 0, 0, 1);
-  const VW = window.innerWidth;
+  const VH = window.innerHeight;
   const slidePic = useTransition(NavOn, {
     key: NavOn,
     from: {
-      x: -VW,
-      x2: VW,
+      y: -VH * 0.4,
+      y2: VH * 0.4,
       opacity: 0,
     },
     enter: {
-      x: 0,
-      x2: 0,
+      y: 0,
+      y2: 0,
       opacity: 1,
     },
     leave: {
-      x: -VW,
-      x2: VW,
-      opacity: 0,
+      y: -VH,
+      y2: VH,
+      opacity: 1,
     },
     config: {
       duration: 1000,
@@ -107,12 +101,13 @@ const Menu = () => {
     },
   });
 
-  return slidePic(({ x, x2 }, menu) =>
+  return slidePic(({ y, y2, opacity }, menu) =>
     menu ? (
       <>
         <Slice1
           style={{
-            x,
+            y,
+            opacity,
           }}
           ref={wrapperRef}
           onClick={() => dispatch(navOffAction())}
@@ -121,7 +116,8 @@ const Menu = () => {
         </Slice1>
         <Slice2
           style={{
-            x: x2,
+            y: y2,
+            opacity,
           }}
           ref={wrapperRef}
           onClick={() => dispatch(navOffAction())}
@@ -142,14 +138,11 @@ const Whole = styled(animated.div)`
   top: 0px;
   left: 0px;
   z-index: 8;
-  width: 100vw;
+  width: 30vw;
   height: 100vh;
   padding-top: 70px;
 
-  background-image: linear-gradient(
-    hsla(35, 15%, 90%, 1),
-    hsla(35, 15%, 75%, 1)
-  );
+  background-image: linear-gradient(hsla(35, 0%, 90%, 1), hsla(35, 0%, 75%, 1));
 
   // display: flex;
   // align-items: center;

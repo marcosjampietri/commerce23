@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { animated, useTransition, config, useTrail } from "react-spring";
+import { animated, useTransition, config } from "react-spring";
 import useScrollTo from "react-spring-scroll-to-hook";
-import { below } from "@/styles/breakpoints";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 import usePrevious from "../../Hooks/usePrevious";
