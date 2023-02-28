@@ -80,7 +80,7 @@ const PaymentForm = () => {
                 }); */
         }
       } else {
-        const { data } = await axios.post("/api/send", {
+        const { data } = await axios.post("/api/email/confirmorder", {
           userInfo,
           yourCart,
         });
@@ -139,9 +139,6 @@ const PaymentForm = () => {
     </>
   );
 };
-
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
 
 export default PaymentForm;
 
@@ -206,7 +203,7 @@ const Name = styled.input`
 
   font-size: 18px;
 
-  letterspacing: 0.025em;
+  letter-spacing: 0.025em;
   ::placeholder {
     color: #aab7c4;
   }
