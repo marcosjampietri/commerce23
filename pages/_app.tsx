@@ -71,8 +71,8 @@ const AppChild = ({ Component, pageProps }: AppProps) => {
         </WrapLoader>
       ) : null}
       <GlobalStyle />
-      <NextChild className={`${pp.className}`}>
-        {/* <NextChild className={`${ms.className} ${pp.className}`}> */}
+
+      <NextChild className={`${ms.className} ${pp.className}`}>
         <Top />
         <NavBar />
         <Menu />

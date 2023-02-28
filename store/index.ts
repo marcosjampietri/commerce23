@@ -12,6 +12,7 @@ import toggle from "./toggleSlicer";
 import subscription from "./subscriptionSlicer";
 import load from "./loadSlicer";
 import cart from "./cartSlicer";
+import address from "./addressSlicer";
 
 const combinedReducer = combineReducers({
   users,
@@ -19,6 +20,7 @@ const combinedReducer = combineReducers({
   stepper,
   load,
   products,
+  address,
   cart,
   subscription,
 });

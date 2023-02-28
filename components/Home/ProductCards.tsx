@@ -125,6 +125,8 @@ const Title = styled.h1`
   max-width: 500px;
   margin: 0px auto 50px;
   padding: 20px;
+
+  font-family: Montserrat;
   text-align: center;
   font-weight: 200;
   letter-spacing: 0.4em;

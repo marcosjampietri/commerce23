@@ -52,7 +52,7 @@ const Number = styled.div`
   height: 45%;
 
   color: white;
-  font-weight: 900;
+  font-weight: 500;
   background-color: hsla(360, 100%, 50%, 0);
   border-radius: 50%;
   transition: 1s;

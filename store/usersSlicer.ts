@@ -8,13 +8,11 @@ interface UserState {
   userInfo: any;
   profile: object | null;
   errorMsg: any;
-  activeAddress: any;
 }
 const initialState = {
   userLoading: false,
   userInfo: null,
   errorMsg: "",
-  activeAddress: 0,
 } as UserState;
 
 interface userArgsType {
@@ -127,9 +125,6 @@ export const usersSlice = createSlice({
     resetError(state) {
       state.errorMsg = "";
     },
-    // setActiveAddress(state, { payload }) {
-    //   state.activeAddress = payload;
-    // },
   },
   extraReducers: (builder) => {
     builder.addCase(registerUser.pending, (state) => {
