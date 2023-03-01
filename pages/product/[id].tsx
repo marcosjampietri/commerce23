@@ -125,7 +125,7 @@ const Text = styled(FlexBox)`
   h6 {
     letter-spacing: initial;
     line-height: 1.2;
-    etter-spacing: 0.05em;
+    letter-spacing: 0.05em;
   }
 
   h4 {
