@@ -22,7 +22,7 @@ export async function middleware(req: NextRequest, event: NextFetchEvent) {
           new TextEncoder().encode(secret)
         );
         console.log("has valid cookie and tried login");
-        return NextResponse.redirect(new URL("/dashboard", req.url));
+        return NextResponse.redirect(new URL("/checkout", req.url));
       } catch (error) {
         console.log("has invalid cookie");
         return NextResponse.next();

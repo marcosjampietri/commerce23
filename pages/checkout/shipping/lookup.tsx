@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-
 import AddressSearch from "react-loqate";
 import { AppDispatch } from "@/store";
 import { seteditSubmission, setinputAddress } from "@/store/addressSlicer";
@@ -12,7 +11,7 @@ const LookUpAddress = () => {
   const AddressSearchInput = (props: any): JSX.Element => {
     return (
       <InputAdd
-        placeholder={"start typing your address or postcode"}
+        placeholder={"click and type your address/postcode"}
         autoComplete="chrome-off"
         {...props}
       />
@@ -42,9 +41,8 @@ export default LookUpAddress;
 const AddWrap = styled.div`
   position: relative;
   width: 100%;
-  max-width: 600px;
-  padding: 10px;
-  margin: 0px auto;
+  max-width: 580px;
+  margin: 10px auto;
 
   ul {
     position: absolute;
@@ -92,7 +90,7 @@ export const InputAdd = styled.input`
   border-radius: 5px;
   background-color: hsla(0, 0%, 0%, 1);
   backdrop-filter: blur(15px);
-  color: hsla(0, 0%, 80%, 1);
+  color: hsla(0, 0%, 100%, 1);
   box-shadow: inset 2px 2px 5px hsla(0, 0%, 0%, 0.15);
 
   transition: 0.5s;

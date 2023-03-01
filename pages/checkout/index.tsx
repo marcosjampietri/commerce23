@@ -131,6 +131,7 @@ const Steps = styled(animated.div)`
 
 const StepCanva = styled.div`
   overflow: hidden;
+  height: 100%;
   margin: 10px;
 
   display: grid;

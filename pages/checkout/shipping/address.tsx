@@ -56,9 +56,9 @@ export default ShippingAddress;
 
 const Addresses = styled.div`
   margin: 10px;
-
-  box-shadow: 2px 2px 15px hsla(0, 0%, 0%, 0.3);
-  border-radius: 10px;
+  padding-top: 20px;
+  height: 60vh;
+  overflow-y: scroll;
 
   display: flex;
   flex-wrap: wrap;

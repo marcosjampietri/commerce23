@@ -126,7 +126,11 @@ const Box = styled.div`
   // border-radius: 5px;
 `;
 
-const Section = styled.section``;
+const Section = styled.div`
+  margin: 10px;
+  height: 80vh;
+  overflow-y: scroll;
+`;
 
 const Button = styled.button`
   width: 100%;

@@ -14,6 +14,8 @@ import {
 import { useTypedSelector } from "@/store/index";
 import { selectCart, clearCart } from "@/store/cartSlicer";
 import { selectUsers } from "@/store/usersSlicer";
+import Loader from "@/components/General/Loader";
+import { WrapLoader } from "../_app";
 
 const elemOptions = {
   style: {
@@ -38,6 +40,7 @@ const PaymentForm = () => {
   const { userInfo } = useTypedSelector(selectUsers);
 
   const [paying, setpaying] = useState(false);
+  const [progress, setprogress] = useState("");
 
   const elements = useElements();
   const stripe = useStripe();
@@ -51,21 +54,25 @@ const PaymentForm = () => {
 
     try {
       //create order
+      setprogress("creatin order");
       const { data: orderId } = await axios.post("/api/order", {
         yourCart,
         userInfo,
       });
       //pay
+      setprogress("making request");
       const { data: clientSecret } = await axios.post("/api/payment", {
         orderId,
       });
       const cardElement = elements!.getElement(CardNumberElement);
 
+      setprogress("creating payment method");
       const paymentMethodReq = await stripe!.createPaymentMethod({
         type: "card",
         card: cardElement!,
         billing_details: { name: "MG Costumer" },
       });
+      setprogress("connecting to your bank");
       const { error } = await stripe!.confirmCardPayment(clientSecret, {
         payment_method: paymentMethodReq.paymentMethod!.id,
       });
@@ -74,11 +81,7 @@ const PaymentForm = () => {
 
       if (error) {
         console.log("[error]", error);
-        {
-          /* dispatch({
-                    type: "PAYMENT_FAILED",
-                }); */
-        }
+        alert("something went wrong");
       } else {
         const { data } = await axios.post("/api/email/confirmorder", {
           userInfo,
@@ -92,18 +95,22 @@ const PaymentForm = () => {
       }
     } catch (err) {
       console.log(err);
+      setpaying(false);
+      alert(`something went wrong with your payment`);
     }
   };
 
   return (
     <>
+      {paying ? (
+        <>
+          <WrapLoader>
+            <Loader />
+            {progress}
+          </WrapLoader>
+        </>
+      ) : null}
       <Form onSubmit={handleSubmit}>
-        {paying ? (
-          <Loading>
-            <h4>Connecting to your Bank...</h4>
-            <div />
-          </Loading>
-        ) : null}
         <Label htmlFor="name">Full Name</Label>
         <Name
           id="name"
@@ -117,12 +124,12 @@ const PaymentForm = () => {
         <CardNumberElementStyled id="cardNumber" options={elemOptions} />
 
         <div>
-          <div>
-            <Label htmlFor="expiry">Card Expiration (use 12/33)</Label>
+          <div style={{ paddingRight: "5px" }}>
+            <Label htmlFor="expiry">EXP (use 12/33)</Label>
             <CardExpiryElementStyled id="expiry" options={elemOptions} />
           </div>
 
-          <div>
+          <div style={{ paddingLeft: "5px" }}>
             <Label htmlFor="cvc">CVC (use 123)</Label>
             <CardCvcElementStyled id="cvc" options={elemOptions} />
           </div>
@@ -163,7 +170,7 @@ const Form = styled.form`
     width: 100%;
 
     div {
-      width: 90%;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: space-between;

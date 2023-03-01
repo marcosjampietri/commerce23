@@ -32,6 +32,8 @@ const ShippingStep = () => {
   const { userInfo } = useTypedSelector(selectUsers);
   const { inputAddress, newAddress } = useTypedSelector(selectAddress);
 
+  console.log(inputAddress);
+
   useEffect(() => {
     dispatch(newAddressOn());
   }, []);
@@ -60,7 +62,42 @@ const ShippingStep = () => {
           <ShippingAddress />
         </>
       ) : (
-        <>{inputAddress ? <AddressForm /> : <LookUpAddress />}</>
+        <>
+          {inputAddress ? (
+            <>
+              {/* <Button onClick={() => dispatch(setinputAddress(null))}>
+                USE ADDRES LOOKUP
+              </Button> */}
+              <AddressForm />
+            </>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <LookUpAddress /> OR{" "}
+              <Button
+                onClick={() =>
+                  dispatch(
+                    setinputAddress({
+                      Line1: "",
+                      Line2: "",
+                      Line3: "",
+                      City: "",
+                      PostalCode: "",
+                      CountryName: "",
+                    })
+                  )
+                }
+              >
+                ENTER MANUALLY
+              </Button>
+            </div>
+          )}
+        </>
       )}
     </>
   );
@@ -79,7 +116,8 @@ const Switch = styled.div`
   box-shadow: 2px 2px 10px hsla(10, 10%, 10%, 0.3);
 
   button {
-    border: 1px solid hsla(10, 10%, 10%, 0.3);
+    transition: 0.5s;
+    border: 2px solid hsla(10, 10%, 10%, 0.3);
     width: 50%;
     height: 100%;
     background-color: transparent;
@@ -96,7 +134,25 @@ const Switch = styled.div`
   }
 
   .on {
-    background-image: linear-gradient(white 50%, #96a5d1);
-    color: black;
+    transition: 0.1s;
+    background-image: linear-gradient(white 50%, hsla(240, 50%, 80%, 1));
+    color: hsla(260, 100%, 50%, 1);
+    border: 2px solid hsla(260, 100%, 50%, 1);
   }
+`;
+
+const Button = styled.button`
+  width: 100%;
+  max-width: 580px;
+  height: 40px;
+  margin: 10px auto;
+
+  background: hsla(340, 100%, 0%, 1);
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;

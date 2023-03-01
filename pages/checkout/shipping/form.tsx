@@ -3,19 +3,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import styled from "styled-components";
 
 import { MdAccountCircle, MdEmail } from "react-icons/md";
-import { HiLockOpen, HiLockClosed } from "react-icons/hi";
+import { BiWorld } from "react-icons/bi";
+import { CiLocationOn } from "react-icons/ci";
 import { useTypedSelector } from "../../../store/index";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import {
-  Form,
-  Field,
-  Label,
-  Input,
-  Warn,
-  Submit,
-} from "../../../pages/login/styles";
+import { Form, Field, Label, Input } from "../../../pages/login/styles";
 import { selectUsers, addAddress } from "@/store/usersSlicer";
 import { review } from "@/store/stepperSlicer";
 import {
@@ -43,11 +37,11 @@ const AddressForm = () => {
   const id = userInfo?._id;
 
   const validationSchema = Yup.object().shape({
-    fullname: Yup.string().required("this field is required"),
-    street: Yup.string().required("this field is required"),
-    city: Yup.string().required("this field is required"),
-    postcode: Yup.string().required("this field is required"),
-    country: Yup.string().required("this field is required"),
+    fullname: Yup.string().required("!"),
+    street: Yup.string().required("!").min(3, "!"),
+    city: Yup.string().required("!"),
+    postcode: Yup.string().required("!"),
+    country: Yup.string().required("!"),
   });
 
   const {
@@ -58,6 +52,8 @@ const AddressForm = () => {
   } = useForm<Inputs>({
     resolver: yupResolver(validationSchema),
   });
+
+  console.log(errors);
 
   const submitHandler: SubmitHandler<Inputs> = async (userAddress) => {
     try {
@@ -113,19 +109,19 @@ const AddressForm = () => {
           {...register("street")}
           type="street"
           placeholder="Av..."
-          defaultValue={`${inputAddress?.Line1} ${inputAddress?.Line2} ${inputAddress?.Line3} `}
+          defaultValue={`${inputAddress?.Line1} ${inputAddress?.Line2} ${inputAddress?.Line3}`}
           className={`${errors.street ? "invalid" : ""}`}
         />
+        <ErrorWrap>
+          {errTransSt((styles, errstreet) =>
+            errstreet ? <Warn style={styles}>{errstreet?.message}</Warn> : null
+          )}
+        </ErrorWrap>
       </FieldA>
-      <ErrorWrap>
-        {errTransSt((styles, errstreet) =>
-          errstreet ? <Warn style={styles}>{errstreet?.message}</Warn> : null
-        )}
-      </ErrorWrap>
 
       <FieldA>
         <Label>CITY</Label>
-        <HiLockOpen />
+        <CiLocationOn />
         <Input
           {...register("city")}
           type="city"
@@ -133,16 +129,16 @@ const AddressForm = () => {
           defaultValue={`${inputAddress?.City}`}
           className={`${errors.city ? "invalid" : ""}`}
         />
+        <ErrorWrap>
+          {errTransCt((styles, errcity) =>
+            errcity ? <Warn style={styles}>{errcity?.message}</Warn> : null
+          )}
+        </ErrorWrap>
       </FieldA>
-      <ErrorWrap>
-        {errTransCt((styles, errcity) =>
-          errcity ? <Warn style={styles}>{errcity?.message}</Warn> : null
-        )}
-      </ErrorWrap>
 
       <FieldA>
         <Label>ZIP CODE</Label>
-        <HiLockClosed />
+        <CiLocationOn />
         <Input
           {...register("postcode")}
           type="postcode"
@@ -150,32 +146,33 @@ const AddressForm = () => {
           defaultValue={`${inputAddress?.PostalCode}`}
           className={`${errors.postcode ? "invalid" : ""}`}
         />
+        <ErrorWrap>
+          {errTransPc((styles, errpostcode) =>
+            errpostcode ? (
+              <Warn style={styles}>{errpostcode?.message}</Warn>
+            ) : null
+          )}
+        </ErrorWrap>
       </FieldA>
-      <ErrorWrap>
-        {errTransPc((styles, errpostcode) =>
-          errpostcode ? (
-            <Warn style={styles}>{errpostcode?.message}</Warn>
-          ) : null
-        )}
-      </ErrorWrap>
 
       <FieldA>
-        <label htmlFor="country">
-          <Input
-            {...register("country")}
-            type="country"
-            id="country"
-            defaultValue={`${inputAddress?.CountryName}`}
-            className={`${errors.country ? "invalid" : ""}`}
-          />
-          <Label>country</Label>
-        </label>
+        <Label>COUNTRY</Label>
+        <BiWorld />
+        <Input
+          {...register("country")}
+          type="country"
+          id="country"
+          defaultValue={`${inputAddress?.CountryName}`}
+          className={`${errors.country ? "invalid" : ""}`}
+        />
+        <ErrorWrap>
+          {errTransCr((styles, errcountry) =>
+            errcountry ? (
+              <Warn style={styles}>{errcountry?.message}</Warn>
+            ) : null
+          )}
+        </ErrorWrap>
       </FieldA>
-      <ErrorWrap>
-        {errTransCr((styles, errcountry) =>
-          errcountry ? <Warn style={styles}>{errcountry?.message}</Warn> : null
-        )}
-      </ErrorWrap>
     </FormA>
   );
 };
@@ -183,7 +180,7 @@ const AddressForm = () => {
 export default AddressForm;
 
 const FormA = styled(Form)`
-  padding: 0px;
+  padding: 0px 10px;
 
   margin: 0px auto;
   position: relative;
@@ -193,14 +190,24 @@ const FormA = styled(Form)`
 const FieldA = styled(Field)`
   margin: 20px auto;
 `;
-
-const WarnA = styled(Warn)`
-  position: relative;
-  bottom: -50px;
-  padding: 0px 20px;
-`;
 const ErrorWrap = styled(animated.div)`
   position: relative;
+`;
+
+export const Warn = styled(animated.span)`
+  position: absolute;
+  width: 25px;
+  top: 0px;
+  right: 2.5%;
+
+  z-index: 2;
+  font-size: 16px;
+  text-align: center;
+
+  // border: 1px solid hsla(360, 100%, 100%, 1);
+  background: hsla(0, 80%, 57%, 1);
+  border-radius: 3px;
+  color: hsla(360, 100%, 100%, 1);
 `;
 
 const Button = styled.button`
