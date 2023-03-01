@@ -3,21 +3,16 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { GetStaticPaths } from "next";
-import { store, useTypedSelector, wrapper } from "@/store";
-import { selectProducts } from "@/store/productsSlicer";
+import { store, wrapper } from "@/store";
 import { addToCart, getTotals } from "@/store/cartSlicer";
+import axios from "axios";
+import { Product } from "@/types/product";
 
 const ProductPage = ({ product }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { list: productList, loading } = useTypedSelector(selectProducts);
-
-  {
-    /* const product = productList.find((a: any) => a._id === id);  */
-  }
-
-  if (!product || loading) {
+  if (!product) {
     return (
       <Page>
         <h1>Looking for this product</h1>
@@ -26,44 +21,44 @@ const ProductPage = ({ product }: any) => {
   }
 
   return (
-    product && (
-      <Page>
-        <Margin>
-          <Description>
-            <Photo>
-              <Image
-                src={product.image}
-                alt={product.title}
-                width={100}
-                height={100}
-              />
-            </Photo>
-            <Text>
-              <Name>
-                <h2>{product.title.toUpperCase()}</h2>
-              </Name>
-              <h6>
-                Lorem ipsum dolor sit amet, consectetur consectetur adipis Lorem
-                ipsum dolor sit amet, adipis Lorem ipsum dolor sit amet,
-                consectetur adipis
-              </h6>
+    <Page>
+      <Margin>
+        <Description>
+          <Photo>
+            <Image
+              src={product.image}
+              alt={product.title}
+              width={100}
+              height={100}
+              loading="eager"
+              priority={true}
+            />
+          </Photo>
+          <Text>
+            <Name>
+              <h2>{product.title.toUpperCase()}</h2>
+            </Name>
+            <h6>
+              Lorem ipsum dolor sit amet, consectetur consectetur adipis Lorem
+              ipsum dolor sit amet, adipis Lorem ipsum dolor sit amet,
+              consectetur adipis
+            </h6>
 
-              <h3>£ {product.price}</h3>
-              <div></div>
-              <Add
-                onClick={() => {
-                  dispatch(addToCart(product));
-                  dispatch(getTotals());
-                  router.push("/cart");
-                }}
-              >
-                <button>ADD TO CART</button>
-              </Add>
-            </Text>
-          </Description>
-        </Margin>
-      </Page>
-    )
+            <h3>£ {product.price}</h3>
+            <div></div>
+            <Add
+              onClick={() => {
+                dispatch(addToCart(product));
+                dispatch(getTotals());
+                router.push("/cart");
+              }}
+            >
+              <button>ADD TO CART</button>
+            </Add>
+          </Text>
+        </Description>
+      </Margin>
+    </Page>
   );
 };
 
@@ -78,11 +73,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps = wrapper.getStaticProps(
   (store: any) => async (context: any) => {
-    const res = await fetch("http://localhost:3000/api/products");
-    const productList = await res.json();
+    const url =
+      process.env["NODE_ENV"] === "development" ? "http://localhost:3000" : "";
+    const productsUrl = () => `${url}/api/products`;
+    const { data: productsList } = await axios.get(productsUrl());
 
     const id = await context.params?.id;
-    const product = await productList.find((a: any) => a._id === id);
+    const product: Product = await productsList.find((a: any) => a._id === id);
     return {
       props: { product },
     };

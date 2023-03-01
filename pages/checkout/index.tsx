@@ -130,6 +130,9 @@ const Steps = styled(animated.div)`
 `;
 
 const StepCanva = styled.div`
+  overflow: hidden;
+  margin: 10px;
+
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
