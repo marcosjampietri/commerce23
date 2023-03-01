@@ -77,9 +77,7 @@ const Checkout: NextPage = () => {
 
         <StepCanva>
           {stepTransition((styles, activeStep) => (
-            <animated.div style={styles}>
-              {stepComponent[activeStep]}
-            </animated.div>
+            <CanvaChild style={styles}>{stepComponent[activeStep]}</CanvaChild>
           ))}
         </StepCanva>
       </Main>
@@ -90,12 +88,12 @@ const Checkout: NextPage = () => {
 export default Checkout;
 
 const Main = styled.main`
-  min-height: 100vh;
+  height: 100vh;
 `;
 
 const Steps = styled(animated.div)`
   z-index: 3;
-  // height: 50px;
+  height: 150px;
   width: 100vw;
   margin: 0px auto;
   padding-top: 100px;
@@ -131,15 +129,17 @@ const Steps = styled(animated.div)`
 
 const StepCanva = styled.div`
   overflow: hidden;
-  height: 100%;
-  margin: 10px;
+  height: calc(100vh - 150px);
 
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
+`;
 
-  div {
-    grid-column: 1;
-    grid-row: 1;
-  }
+const CanvaChild = styled(animated.div)`
+  height: calc(100vh - 150px);
+  padding: 10px;
+  overflow-y: scroll;
+  grid-column: 1;
+  grid-row: 1;
 `;

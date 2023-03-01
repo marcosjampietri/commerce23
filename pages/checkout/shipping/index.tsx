@@ -117,7 +117,7 @@ const Switch = styled.div`
 
   button {
     transition: 0.5s;
-    border: 2px solid hsla(10, 10%, 10%, 0.3);
+    border: 2px solid hsla(10, 10%, 70%, 0.3);
     width: 50%;
     height: 100%;
     background-color: transparent;
@@ -142,7 +142,7 @@ const Switch = styled.div`
 `;
 
 const Button = styled.button`
-  width: 100%;
+  width: 90vw;
   max-width: 580px;
   height: 40px;
   margin: 10px auto;

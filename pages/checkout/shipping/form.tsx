@@ -188,7 +188,7 @@ const FormA = styled(Form)`
 `;
 
 const FieldA = styled(Field)`
-  margin: 20px auto;
+  margin: 15px auto;
 `;
 const ErrorWrap = styled(animated.div)`
   position: relative;

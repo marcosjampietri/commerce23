@@ -111,6 +111,12 @@ const PaymentForm = () => {
         </>
       ) : null}
       <Form onSubmit={handleSubmit}>
+        <Icons>
+          <img src="/card/visa.svg" alt="visa card icon" />
+          <img src="/card/master.svg" alt="master card icon" />
+          <img src="/card/amex.svg" alt="amex card icon" />
+          <div>£ {itemsTotal}</div>
+        </Icons>
         <Label htmlFor="name">Full Name</Label>
         <Name
           id="name"
@@ -119,18 +125,22 @@ const PaymentForm = () => {
         />
 
         <Label htmlFor="cardNumber">
-          Card Number (use: 4242 4242 4242 4242)
+          Card Number <span>(use: 4242 4242 4242 4242)</span>
         </Label>
         <CardNumberElementStyled id="cardNumber" options={elemOptions} />
 
         <div>
-          <div style={{ paddingRight: "5px" }}>
-            <Label htmlFor="expiry">EXP (use 12/33)</Label>
+          <div>
+            <Label htmlFor="expiry">
+              EXP <span>(use 12/33)</span>
+            </Label>
             <CardExpiryElementStyled id="expiry" options={elemOptions} />
           </div>
 
-          <div style={{ paddingLeft: "5px" }}>
-            <Label htmlFor="cvc">CVC (use 123)</Label>
+          <div>
+            <Label htmlFor="cvc">
+              CVC <span>(use 123)</span>
+            </Label>
             <CardCvcElementStyled id="cvc" options={elemOptions} />
           </div>
         </div>
@@ -182,6 +192,16 @@ const Label = styled.label`
   padding: 24px 0px 4px 2px;
 
   align-self: start;
+
+  font-size: 16px;
+  font-family: Helvetica, sans-serif;
+  font-weight: 100;
+  color: #404040;
+
+  span {
+    color: #a3a3a3;
+    font-size: 14px;
+  }
 `;
 
 const Button = styled.button`
@@ -233,37 +253,42 @@ const CardNumberElementStyled = styled(CardNumberElement)`
 const CardExpiryElementStyled = styled(CardExpiryElement)`
   width: 100%;
   border: 1px solid hsla(0, 0%, 70%, 1);
-  border-radius: 5px;
+
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   padding: 5px;
 `;
 
 const CardCvcElementStyled = styled(CardCvcElement)`
   width: 100%;
   border: 1px solid hsla(0, 0%, 70%, 1);
-  border-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
   padding: 5px;
 `;
 
-const Loading = styled.span`
-  position: absolute;
+const Icons = styled.div`
   width: 100%;
-  height: 100%;
-
-  background: hsla(290, 100%, 0%, 0.5);
-  backdrop-filter: blur(10px);
-  border-radius: 5px;
-
-  z-index: 3;
 
   display: flex;
-  flex-direction: column;
-  place-items: center;
+  align-items: center;
+  justify-content: start;
 
-  h4 {
-    padding: 30px 0px;
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 12px;
-    color: hsla(0, 0%, 100%, 1);
+  img {
+    width: 40px;
+    height: 26px;
+    margin: 5px;
+
+    border: 1px solid whitesmoke;
+    border-radius: 3px;
+  }
+  div {
+    width: 100%;
+    text-align: end;
+    color: hsla(340, 100%, 50%, 1);
+    font-size: 20px;
+    font-family: Montserrat;
+    font-weight: 700;
   }
 `;

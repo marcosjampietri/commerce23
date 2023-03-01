@@ -40,7 +40,8 @@ export default LookUpAddress;
 
 const AddWrap = styled.div`
   position: relative;
-  width: 100%;
+  width: 90vw;
+  height: 50px;
   max-width: 580px;
   margin: 10px auto;
 
@@ -92,6 +93,9 @@ export const InputAdd = styled.input`
   backdrop-filter: blur(15px);
   color: hsla(0, 0%, 100%, 1);
   box-shadow: inset 2px 2px 5px hsla(0, 0%, 0%, 0.15);
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
 
   transition: 0.5s;
 
@@ -101,6 +105,9 @@ export const InputAdd = styled.input`
     font-size: 16px;
     font-weight: 100;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   :focus {

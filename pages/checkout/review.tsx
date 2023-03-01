@@ -128,8 +128,6 @@ const Box = styled.div`
 
 const Section = styled.div`
   margin: 10px;
-  height: 80vh;
-  overflow-y: scroll;
 `;
 
 const Button = styled.button`

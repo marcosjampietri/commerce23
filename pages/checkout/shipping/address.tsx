@@ -55,10 +55,9 @@ const ShippingAddress = () => {
 export default ShippingAddress;
 
 const Addresses = styled.div`
-  margin: 10px;
+  margin: 10px auto;
+  max-width: 1200px;
   padding-top: 20px;
-  height: 60vh;
-  overflow-y: scroll;
 
   display: flex;
   flex-wrap: wrap;
@@ -87,6 +86,7 @@ const Addresses = styled.div`
 const Address = styled.label`
   display: block;
   max-width: 260px;
+  max-height: 260px;
   width: 100%;
   transform: scale(1);
   z-index: 1;
