@@ -74,7 +74,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = wrapper.getStaticProps(
   (store: any) => async (context: any) => {
     const url =
-      process.env["NODE_ENV"] === "development" ? "http://localhost:3000" : "";
+      process.env["NODE_ENV"] === "development"
+        ? "http://localhost:3000"
+        : "https://commerce23.vercel.app";
     const productsUrl = () => `${url}/api/products`;
     const { data: productsList } = await axios.get(productsUrl());
 
