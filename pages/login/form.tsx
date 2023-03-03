@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -13,6 +13,8 @@ import { registerUser, loginUser, selectUsers } from "@/store/usersSlicer";
 import { AppDispatch } from "@/store/index";
 import { useTypedSelector } from "@/store/index";
 import { selectload, setSubmitting } from "@/store/loadSlicer";
+import { Router, useRouter } from "next/router";
+import axios from "axios";
 
 type Inputs = {
   name: string;
@@ -24,13 +26,19 @@ type Inputs = {
 
 const FormComponent = ({ reg }: any) => {
   const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
   const { userLoading, errorMsg } = useTypedSelector(selectUsers);
   const { submitting } = useTypedSelector(selectload);
+  const [forgot, setForgot] = useState(false);
 
   useEffect(() => {
     const change = !userLoading && submitting && !errorMsg;
     console.log(change);
   }, [userLoading, errorMsg, submitting]);
+
+  useEffect(() => {
+    reg && setForgot(false);
+  }, [reg]);
 
   const validationSchemaRegister = Yup.object().shape({
     name: Yup.string().required("Name is required, Mr. X 🤪"),
@@ -58,9 +66,19 @@ const FormComponent = ({ reg }: any) => {
       .required("Password is required 😅"),
   });
 
+  const validationForgot = Yup.object().shape({
+    email: Yup.string()
+      .required("Email is required 😅")
+      .email("Email is invalid 🧐"),
+  });
+
   const formOptions = {
     resolver: yupResolver(
-      reg ? validationSchemaRegister : validationSchemaLogin
+      reg
+        ? validationSchemaRegister
+        : forgot
+        ? validationForgot
+        : validationSchemaLogin
     ),
   };
 
@@ -94,13 +112,31 @@ const FormComponent = ({ reg }: any) => {
       alert("something wrong is not right");
     }
   };
+  const handleForgot: SubmitHandler<Inputs> = async (userData) => {
+    try {
+      dispatch(setSubmitting(true));
+      const { email } = userData;
 
-  const switchSign = useTransition(reg, {
+      const { data } = await axios.post("/api/email/resetpass", {
+        email,
+      });
+
+      router.push("/profile/sent");
+    } catch (err) {
+      alert("something wrong is not right");
+    }
+  };
+
+  const fieldStyles = {
     from: { opacity: 0, height: "0px" },
     enter: { opacity: 1, height: "60px" },
     leave: { opacity: 1, height: "0px" },
     delay: 0,
-  });
+  };
+
+  const switchSign = useTransition(reg, fieldStyles);
+
+  const forgotSwitch = useTransition(forgot, fieldStyles);
 
   const animStyles = {
     from: { opacity: 0, transform: "translate3d(0, 50px, 0)" },
@@ -119,11 +155,13 @@ const FormComponent = ({ reg }: any) => {
     <>
       <Form
         noValidate
-        onSubmit={handleSubmit(reg ? submitHandler : submitHandlerLogin)}
+        onSubmit={handleSubmit(
+          reg ? submitHandler : forgot ? handleForgot : submitHandlerLogin
+        )}
       >
         <SubmitWrap>
           <Submit type="submit" className={`${errorsExist ? "disabled" : ""}`}>
-            {reg ? "REGISTER" : "LOGIN"}
+            {reg ? "REGISTER" : forgot ? "Reset Password" : "LOGIN"}
           </Submit>
         </SubmitWrap>
 
@@ -174,26 +212,41 @@ const FormComponent = ({ reg }: any) => {
         </ErrorWrap>
 
         <Blank />
-        <FieldWrap>
-          <Field>
-            <Label>PASSWORD</Label>
-            <HiLockOpen />
-            <Input
-              {...register("password")}
-              type="password"
-              placeholder="password"
-              defaultValue=""
-              className={`${errors.password ? "invalid" : ""}`}
-            />
-          </Field>
-        </FieldWrap>
-        <ErrorWrap>
-          {errTransPs((styles, errpass) =>
-            errpass ? <Warn style={styles}>{errpass?.message}</Warn> : null
-          )}
-        </ErrorWrap>
-
+        {forgotSwitch((styles, item) =>
+          !item ? (
+            <>
+              <FieldWrap style={styles}>
+                <Field>
+                  <Label>PASSWORD</Label>
+                  <HiLockOpen />
+                  <Input
+                    {...register("password")}
+                    type="password"
+                    placeholder="password"
+                    defaultValue=""
+                    className={`${errors.password ? "invalid" : ""}`}
+                  />
+                </Field>
+              </FieldWrap>
+              <ErrorWrap>
+                {errTransPs((styles, errpass) =>
+                  errpass ? (
+                    <Warn style={styles}>{errpass?.message}</Warn>
+                  ) : null
+                )}
+              </ErrorWrap>
+            </>
+          ) : null
+        )}
         <Blank />
+
+        {switchSign((styles, item) =>
+          !item ? (
+            <animated.div style={styles} onClick={() => setForgot(!forgot)}>
+              {forgot ? "Cancel" : "Forgot Password?"}
+            </animated.div>
+          ) : null
+        )}
         {switchSign((styles, item) =>
           item ? (
             <>
