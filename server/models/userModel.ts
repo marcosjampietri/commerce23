@@ -40,7 +40,7 @@ const userSchema: Schema = new Schema({
       },
     ],
   },
-  // orders: { type: [Schema.Types.ObjectId], ref: "order", required: false },
+  orders: { type: [Schema.Types.ObjectId], ref: "order", required: false },
 });
 
 userSchema.methods.encryptPassword = async function (password: string) {
