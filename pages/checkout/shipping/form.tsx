@@ -194,7 +194,7 @@ const AddressForm = () => {
               <ReactFlagsSelect
                 // value={value}
                 // onChange={onChange}
-                className={`${errors.postcode ? "invalid" : ""}`}
+                className={`${errors.country ? "invalid" : ""}`}
                 searchable
                 searchPlaceholder="FIND COUNTRY"
                 onSelect={(code) => {
