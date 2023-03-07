@@ -51,7 +51,9 @@ const ShippingStep = () => {
           ENTER NEW ADDRESS
         </button>
         <button
-          onClick={() => dispatch(newAddressOff())}
+          onClick={() =>
+            userInfo.address?.length > 0 && dispatch(newAddressOff())
+          }
           className={`${newAddress ? "" : "on"}`}
         >
           CHOOSE FROM LIST

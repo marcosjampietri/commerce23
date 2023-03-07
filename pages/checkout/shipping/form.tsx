@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import styled from "styled-components";
 
 import { MdAccountCircle, MdEmail } from "react-icons/md";
@@ -8,6 +8,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { useTypedSelector } from "../../../store/index";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import ReactFlagsSelect from "react-flags-select";
 
 import { Form, Field, Label, Input } from "../../../pages/login/styles";
 import { selectUsers, addAddress } from "@/store/usersSlicer";
@@ -19,6 +20,8 @@ import {
   setinputAddress,
 } from "@/store/addressSlicer";
 import { animated, useTransition } from "react-spring";
+import { useEffect, useState } from "react";
+import { countryData } from "./countryData";
 
 type Inputs = {
   fullname: string;
@@ -33,6 +36,17 @@ const AddressForm = () => {
 
   const { userInfo } = useTypedSelector(selectUsers);
   const { inputAddress } = useTypedSelector(selectAddress);
+  const [selected, setSelected] = useState("");
+  const [cNameInp, setcNameInp] = useState("");
+
+  useEffect(() => {
+    const X = inputAddress?.CountryName;
+    const ctObject = countryData.find((ct) => X && ct.includes(X));
+    const ctCode = X && ctObject && ctObject![0];
+    const ctName = X && ctObject && ctObject![1];
+    ctName && setcNameInp(ctName);
+    ctCode && setSelected(ctCode);
+  }, [inputAddress]);
 
   const id = userInfo?._id;
 
@@ -48,6 +62,7 @@ const AddressForm = () => {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(validationSchema),
@@ -155,16 +170,45 @@ const AddressForm = () => {
         </ErrorWrap>
       </FieldA>
 
-      <FieldA>
-        <Label>COUNTRY</Label>
-        <BiWorld />
-        <Input
+      <FieldCT>
+        {/* <Label>COUNTRY</Label> */}
+        {/* <BiWorld /> */}
+        {/* <Input
           {...register("country")}
           type="country"
           id="country"
           defaultValue={`${inputAddress?.CountryName}`}
           className={`${errors.country ? "invalid" : ""}`}
+        /> */}
+
+        <Controller
+          // name="country"
+          control={control}
+          {...register("country")}
+          // defaultValue={`${inputAddress?.CountryName}`}
+          render={({ field: { onChange, onBlur, value, ref } }) => {
+            useEffect(() => {
+              onChange(cNameInp);
+            }, [cNameInp]);
+            return (
+              <ReactFlagsSelect
+                // value={value}
+                // onChange={onChange}
+                className={`${errors.postcode ? "invalid" : ""}`}
+                searchable
+                searchPlaceholder="FIND COUNTRY"
+                onSelect={(code) => {
+                  setSelected(code);
+                  const ctObject = countryData.find((ct) => ct.includes(code));
+                  const ct = ctObject![1];
+                  onChange(ct);
+                }}
+                selected={selected}
+              />
+            );
+          }}
         />
+
         <ErrorWrap>
           {errTransCr((styles, errcountry) =>
             errcountry ? (
@@ -172,7 +216,7 @@ const AddressForm = () => {
             ) : null
           )}
         </ErrorWrap>
-      </FieldA>
+      </FieldCT>
     </FormA>
   );
 };
@@ -190,8 +234,38 @@ const FormA = styled(Form)`
 const FieldA = styled(Field)`
   margin: 15px auto;
 `;
+const FieldCT = styled.div`
+  position: relative;
+  width: 100%;
+  height: 60px;
+  margin: 0px auto;
+  padding: 0px;
+
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px hsla(0, 0%, 0%, 0.3);
+
+  div {
+    position: absolute;
+    width: 100%;
+    padding: 0px;
+    border-radius: 5px;
+  }
+
+  .invalid {
+    transition: 0.3s;
+    position: absolute;
+    border: 2px solid hsla(0, 100%, 50%, 0.7);
+  }
+
+  button {
+    height: 60px;
+    border: none;
+  }
+`;
+
 const ErrorWrap = styled(animated.div)`
   position: relative;
+  pointer-events: none;
 `;
 
 export const Warn = styled(animated.span)`

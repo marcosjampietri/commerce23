@@ -23,7 +23,7 @@ const LookUpAddress = () => {
       <AddressSearch
         locale="en_GB"
         apiKey={loqate}
-        countries={["GB"]}
+        // countries={["GB"]}
         components={{ Input: AddressSearchInput }}
         onSelect={(address) => {
           dispatch(setinputAddress(address));
