@@ -21,7 +21,7 @@ import {
 } from "@/store/addressSlicer";
 import { animated, useTransition } from "react-spring";
 import { useEffect, useState } from "react";
-import { countryData } from "./countryData";
+import countryData from "@/components/countryData";
 
 type Inputs = {
   fullname: string;

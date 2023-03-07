@@ -1,4 +1,4 @@
-export const countryData = [
+const countryData = [
   [
     "AD",
     "Andorra",
@@ -1177,3 +1177,5 @@ export const countryData = [
     "en,sn,nd",
   ],
 ];
+
+export default countryData;
