@@ -1,10 +1,10 @@
 interface specsTypes {
-  weight: string;
-  dimensions: number;
-  size: string;
-  colour: string;
+  weight: number;
+  dimensions: number[];
+  size?: string;
+  colour?: string;
+  brandName: string;
 }
-[];
 
 export type Product = {
   _id: string;
@@ -12,12 +12,11 @@ export type Product = {
   price: number;
   image: string;
   description: string;
-  url: string;
-  recommendedRetailPriceCurrency: string;
-  loading: boolean;
-  brandName: string;
-  categories: string[];
-  specs: specsTypes;
+  stock: number;
   quantity?: any;
   itemTotal?: number;
+  url?: string;
+  categories?: string[];
+  tags?: string[];
+  specs?: specsTypes;
 };

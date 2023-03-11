@@ -64,7 +64,7 @@ const CartPage = () => {
                 <Quantity>
                   <Button
                     onClick={() => {
-                      dispatch(increaseQty(product._id));
+                      dispatch(increaseQty(product));
                       dispatch(getTotals());
                     }}
                   >

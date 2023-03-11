@@ -36,6 +36,17 @@ const Cards = () => {
       <Table>
         {productList.map((product: Product, index: number) => (
           <ProductCard key={index}>
+            {product.stock == 0 && <StockInfo>SOLD OUT</StockInfo>}
+            {product.stock == 1 && (
+              <StockInfo
+                style={{
+                  backgroundImage:
+                    "linear-gradient(145deg, orange, #f8c15a, orange)",
+                }}
+              >
+                LAST ITEM
+              </StockInfo>
+            )}
             <Link href={`/product/${product._id}`}>
               <Image
                 src={product.image}
@@ -53,7 +64,11 @@ const Cards = () => {
                 }}
               />
             </Link>
-            <Tags>cat1, outras</Tags>
+            <Tags>
+              {product.categories?.map((item, i) => (
+                <div>{`${item} - `}</div>
+              ))}
+            </Tags>
             <Star>
               {[...Array(5)].map((_, index) => (
                 <FiStar key={index} />
@@ -97,7 +112,7 @@ const Cards = () => {
                   <h3>{qty(product._id)}</h3>
                   <Button
                     onClick={() => {
-                      dispatch(increaseQty(product._id));
+                      dispatch(increaseQty(product));
                       dispatch(getTotals());
                     }}
                   >
@@ -146,6 +161,7 @@ const Table = styled.div`
 `;
 
 const ProductCard = styled.div`
+  position: relative;
   margin: 30px;
   flex-grow: 1;
   flex-shrink: 1;
@@ -208,6 +224,8 @@ const Tags = styled.div`
   margin: 10px 0px;
   color: hsla(240, 50%, 40%, 1);
   font-size: 0.7em;
+
+  display: flex;
 `;
 
 const Controls = styled.div`
@@ -270,4 +288,23 @@ const Button = styled.div`
   svg {
     fill: white;
   }
+`;
+
+const StockInfo = styled.div`
+  position: absolute;
+  right: 0px;
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+  background-image: linear-gradient(145deg, red, #ff8585, red);
+  transform: translate(50%, -50%);
+
+  color: white;
+  font-weight: 900;
+  font-size: 12px;
+
+  display: grid;
+  place-items: center;
+  text-align: center;
 `;
