@@ -54,7 +54,9 @@ const cartSlice = createSlice({
             return {
               ...product,
               quantity: onStock ? product.quantity! + 1 : product.quantity,
-              itemTotal: (product.quantity! + 1) * product.price,
+              itemTotal: onStock
+                ? (product.quantity! + 1) * product.price
+                : product.quantity! * product.price,
             };
           }
           return product;
