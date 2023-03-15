@@ -5,6 +5,7 @@ interface order extends Document {
   orderItems: object[];
   paymentMethod: string;
   paymentResult: string;
+  deliverAddress: object;
   itemsPrice: number;
   shippingPrice: number;
   taxPrice: number;
@@ -25,7 +26,9 @@ const OrderSchema: Schema = new Schema({
       price: { type: Number, required: true },
     },
   ],
-  paymentMethod: { type: String, required: true },
+
+  deliverAddress: { type: Object, required: true },
+  paymentMethod: { type: String, required: false },
   paymentResult: { id: String, status: String, email_address: String },
   itemsPrice: { type: Number, required: true },
   shippingPrice: { type: Number, required: true },

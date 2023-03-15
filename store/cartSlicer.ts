@@ -49,12 +49,12 @@ const cartSlice = createSlice({
       return {
         ...state,
         yourCart: state.yourCart.map((product: Product) => {
-          const onStock = payload.stock >= product.quantity + 1;
+          const onStock = payload.stock >= product.quantity! + 1;
           if (product._id === payload._id) {
             return {
               ...product,
-              quantity: onStock ? product.quantity + 1 : product.quantity,
-              itemTotal: (product.quantity + 1) * product.price,
+              quantity: onStock ? product.quantity! + 1 : product.quantity,
+              itemTotal: (product.quantity! + 1) * product.price,
             };
           }
           return product;
@@ -65,12 +65,12 @@ const cartSlice = createSlice({
       return {
         ...state,
         yourCart: state.yourCart.map((product: Product) => {
-          if (product.quantity > 0) {
+          if (product.quantity! > 0) {
             if (product._id === payload) {
               return {
                 ...product,
-                quantity: product.quantity - 1,
-                itemTotal: (product.quantity - 1) * product.price,
+                quantity: product.quantity! - 1,
+                itemTotal: (product.quantity! - 1) * product.price,
               };
             }
           } else {
@@ -84,7 +84,7 @@ const cartSlice = createSlice({
     },
     getTotals: (state) => {
       const itemsTotal = state.yourCart
-        .map((product: Product): number => product.price * product.quantity)
+        .map((product: Product): number => product.price * product.quantity!)
         .reduce((a: any, b: any) => a + b, 0)
         .toFixed(2);
       return {

@@ -13,7 +13,7 @@ export type Product = {
   image: string;
   description: string;
   stock: number;
-  quantity?: any;
+  quantity?: number;
   itemTotal?: number;
   url?: string;
   categories?: string[];

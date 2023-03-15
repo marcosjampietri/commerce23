@@ -2,11 +2,13 @@ const MongoClient = require("mongodb").MongoClient;
 const { disconnect } = require("mongoose");
 const { ObjectId } = require("mongodb");
 const users = require("./users.json");
+const products = require("./products.json");
+const orders = require("./orders.json");
 const { connectToMongo, uri } = require("./mongo");
 
-const dataToSeed = { users };
+const dataToSeed = { users, products, orders };
 
-const DB = "SUBSCRIPTION";
+const DB = "SHOP";
 
 const oidToObjectId = (jsonData) =>
   jsonData.map((item) =>

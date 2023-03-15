@@ -1,0 +1,162 @@
+[
+  {
+    "_id": {
+      "$oid": "60509a276f5358dd59d98d47"
+    },
+    "title": "Cool ring",
+    "price": 100,
+    "description": "A very cool ring indeed",
+    "image": "https://images.unsplash.com/photo-1551443083-96ad4897c329?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+    "stock": 1,
+    "url": "",
+    "categories": ["mens"],
+    "tags": ["mens"],
+    "specs": {
+      "weight": 200,
+      "dimensions": [20, 20, 50],
+      "size": "",
+      "colour": "",
+      "brandName": "Best Goods"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6050a1462c76bd20418548d1"
+    },
+    "title": "Cool Pendant",
+    "price": 150,
+    "description": "A very cool Pendant indeed",
+    "image": "https://images.unsplash.com/photo-1565613858852-36615a107eed?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=932&q=80",
+    "stock": 5,
+    "url": "",
+    "categories": ["mens"],
+    "tags": ["mens"],
+    "specs": {
+      "weight": 200,
+      "dimensions": [20, 20, 50],
+      "size": "",
+      "colour": "",
+      "brandName": "Best Goods"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6050a16b2c76bd20418548d2"
+    },
+    "title": "Nice T-Shirt",
+    "price": 150,
+    "description": "A very cool T-Shirt indeed",
+    "image": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=958&q=80",
+    "stock": 5,
+    "url": "",
+    "categories": ["mens"],
+    "tags": ["mens"],
+    "specs": {
+      "weight": 200,
+      "dimensions": [20, 20, 50],
+      "size": "",
+      "colour": "",
+      "brandName": "Best Goods"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "611a288c3c599b43077a0034"
+    },
+    "title": "Awesome Stufft",
+    "price": 250,
+    "description": "A lot of very cool stuff indeed",
+    "image": "https://images.unsplash.com/photo-1416339134316-0e91dc9ded92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1934&q=80",
+    "stock": 5,
+    "url": "",
+    "categories": ["mens"],
+    "tags": ["mens"],
+    "specs": {
+      "weight": 200,
+      "dimensions": [20, 20, 50],
+      "size": "",
+      "colour": "",
+      "brandName": "Best Goods"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "619ff056a082319e068fffa1"
+    },
+    "title": "the best Guitar",
+    "price": 1900,
+    "description": "The Best guitar you've ever played with",
+    "image": "https://images.unsplash.com/photo-1567561284831-f1503345cb5e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80",
+    "stock": 1,
+    "url": "",
+    "categories": ["mens"],
+    "tags": ["mens"],
+    "specs": {
+      "weight": 200,
+      "dimensions": [20, 20, 50],
+      "size": "",
+      "colour": "",
+      "brandName": "Best Goods"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "61a0c9f9a082319e068fffa2"
+    },
+    "title": "Awesome Suit",
+    "price": 250,
+    "description": "3 piece suit with Jacke, Waistcoat and Trousers",
+    "image": "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80",
+    "stock": 0,
+    "url": "",
+    "categories": ["mens"],
+    "tags": ["mens"],
+    "specs": {
+      "weight": 200,
+      "dimensions": [20, 20, 50],
+      "size": "",
+      "colour": "",
+      "brandName": "Best Goods"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "61b86a413f4b22d20c0e3db9"
+    },
+    "title": "1 Chanel mixer",
+    "price": 2050,
+    "description": "A very useful mixer with only one channel",
+    "image": "https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1304&q=80",
+    "stock": 5,
+    "url": "",
+    "categories": ["mens"],
+    "tags": ["mens"],
+    "specs": {
+      "weight": 200,
+      "dimensions": [20, 20, 50],
+      "size": "",
+      "colour": "",
+      "brandName": "Best Goods"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "62bb869ca431a74567c257ef"
+    },
+    "title": "Kuchiware 1",
+    "price": 100,
+    "description": "A beautiful ceramic article",
+    "image": "https://res.cloudinary.com/marcos-jampietri/image/upload/v1656456630/vaso_e_roma_33_tmpqjt.jpg",
+    "stock": 5,
+    "url": "",
+    "categories": ["mens"],
+    "tags": ["mens"],
+    "specs": {
+      "weight": 200,
+      "dimensions": [20, 20, 50],
+      "size": "",
+      "colour": "",
+      "brandName": "Best Goods"
+    }
+  }
+]

@@ -16,6 +16,7 @@ import { selectCart, clearCart } from "@/store/cartSlicer";
 import { selectUsers } from "@/store/usersSlicer";
 import Loader from "@/components/General/Loader";
 import { WrapLoader } from "../_app";
+import { selectAddress } from "@/store/addressSlicer";
 
 const elemOptions = {
   style: {
@@ -38,6 +39,7 @@ const PaymentForm = () => {
 
   const { yourCart, itemsTotal } = useTypedSelector(selectCart);
   const { userInfo } = useTypedSelector(selectUsers);
+  const { activeAddress } = useTypedSelector(selectAddress);
 
   const [paying, setpaying] = useState(false);
   const [progress, setprogress] = useState("");
@@ -54,10 +56,17 @@ const PaymentForm = () => {
 
     try {
       //create order
+      setprogress("taking stock");
+      await axios.post("/api/stock", {
+        yourCart,
+      });
+      //create order
       setprogress("creatin order");
+      const deliverAddress = userInfo.address[activeAddress];
       const { data: orderId } = await axios.post("/api/order", {
         yourCart,
         userInfo,
+        deliverAddress,
       });
       //pay
       setprogress("making request");

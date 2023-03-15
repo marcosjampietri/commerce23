@@ -1,0 +1,54 @@
+[
+  {
+    "_id": {
+      "$oid": "64122f34cbfa8956c8c15b5a"
+    },
+    "user": {
+      "$oid": "62a8fdf0ebce5c57a8dbf492"
+    },
+    "orderItems": [
+      {
+        "title": "Cool Pendant",
+        "quantity": 2,
+        "image": "https://images.unsplash.com/photo-1565613858852-36615a107eed?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=932&q=80",
+        "price": 150,
+        "_id": {
+          "$oid": "6050a1462c76bd20418548d1"
+        }
+      },
+      {
+        "title": "Awesome Stufft",
+        "quantity": 4,
+        "image": "https://images.unsplash.com/photo-1416339134316-0e91dc9ded92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1934&q=80",
+        "price": 250,
+        "_id": {
+          "$oid": "611a288c3c599b43077a0034"
+        }
+      },
+      {
+        "title": "the best Guitar",
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1567561284831-f1503345cb5e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80",
+        "price": 1900,
+        "_id": {
+          "$oid": "619ff056a082319e068fffa1"
+        }
+      }
+    ],
+    "deliverAddress": {
+      "fullname": "MARCOS DE PAIVA",
+      "street": "10 Widford",
+      "city": "London",
+      "postcode": "NW1 8TE",
+      "country": "United Kingdom"
+    },
+    "paymentMethod": "card",
+    "itemsPrice": 320000,
+    "shippingPrice": 599,
+    "taxPrice": 0,
+    "totalPrice": 320599,
+    "isPaid": false,
+    "isDelivered": false,
+    "__v": 0
+  }
+]
