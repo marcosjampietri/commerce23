@@ -34,7 +34,7 @@ const CardSkeleton = styled.div`
   position: relative;
   width: 220px;
   max-width: 37vw;
-  min-width: 180px;
+  min-width: 110px;
   height: 378px;
   margin: 20px 10px;
 
