@@ -161,7 +161,7 @@ export const Table = styled.div`
 const ProductCard = styled.div`
   position: relative;
   max-width: 37vw;
-  min-width: 180px;
+  min-width: 110px;
   margin: 20px 10px;
   flex-grow: 1;
   flex-shrink: 1;
