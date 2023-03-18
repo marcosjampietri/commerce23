@@ -16,6 +16,7 @@ import {
   removeFromCart,
   selectCart,
 } from "@/store/cartSlicer";
+import ProductsLoad from "./ProductCardsLoad";
 
 const Cards = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -25,15 +26,12 @@ const Cards = () => {
   const qty = (productID: string) =>
     yourCart[yourCart.findIndex((x: any) => x._id === productID)].quantity;
 
-  if (loading) {
-    return <div>LOADING...</div>;
-  }
-
   return (
     <New id="New-Items">
       <Title>NEW ITEMS</Title>
 
       <Table>
+        {loading && <ProductsLoad />}
         {productList.map((product: Product, index: number) => (
           <ProductCard key={index}>
             {product.stock == 0 && <StockInfo>SOLD OUT</StockInfo>}
@@ -59,7 +57,7 @@ const Cards = () => {
                   objectPosition: "center",
                   cursor: "pointer",
                   width: "100%",
-                  height: "300px",
+                  height: "200px",
                   margin: "0px 5px",
                 }}
               />
@@ -79,8 +77,8 @@ const Cards = () => {
             </ProductName>
 
             <Price>
-              <h3>€ {product.price} </h3>
-              <h4>€ {product.price * 1.2} </h4>
+              <h3>£ {product.price} </h3>
+              <h4>£ {product.price * 1.2} </h4>
             </Price>
 
             <Controls>
@@ -130,12 +128,12 @@ const Cards = () => {
 
 export default Cards;
 
-const New = styled.section`
+export const New = styled.section`
   width: 100vw;
   padding: 60px 20px;
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   width: 100%;
   max-width: 500px;
   margin: 0px auto 50px;
@@ -151,7 +149,7 @@ const Title = styled.h1`
   border-bottom: 1px solid hsla(0, 0%, 60%, 1);
 `;
 
-const Table = styled.div`
+export const Table = styled.div`
   max-width: 1200px;
   margin: 0px auto;
 
@@ -162,11 +160,12 @@ const Table = styled.div`
 
 const ProductCard = styled.div`
   position: relative;
-  margin: 30px;
+  max-width: 37vw;
+  min-width: 180px;
+  margin: 20px 10px;
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 200px;
-  max-width: 250px;
 `;
 
 const ProductName = styled.div`
@@ -212,7 +211,7 @@ const Price = styled.div`
 const Star = styled.div`
   position: relative;
   left: -4px;
-  margin: 10px 0px 10px 0px;
+  margin: 4px 0px;
 
   svg {
     fill: hsla(35, 100%, 50%, 1);
@@ -221,7 +220,7 @@ const Star = styled.div`
   }
 `;
 const Tags = styled.div`
-  margin: 10px 0px;
+  margin: 4px 0px;
   color: hsla(240, 50%, 40%, 1);
   font-size: 0.7em;
 
