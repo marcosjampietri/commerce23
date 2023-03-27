@@ -5,16 +5,15 @@ interface specsTypes {
   dimensions: number[];
   size?: string;
   colour?: string;
-  brandName: string;
+  brand: string;
 }
 
 interface product extends Document {
   title: string;
   price: number;
-  image: string;
+  images: string[];
   description: string;
   stock: number;
-  url?: string;
   categories?: string[];
   tags?: string[];
   specs?: specsTypes;
@@ -29,8 +28,8 @@ const ProdSchema: Schema = new Schema({
     type: Number,
     required: true,
   },
-  image: {
-    type: String,
+  images: {
+    type: [String],
     required: true,
   },
   description: {
@@ -40,10 +39,6 @@ const ProdSchema: Schema = new Schema({
   stock: {
     type: Number,
     required: true,
-  },
-  url: {
-    type: String,
-    required: false,
   },
   categories: {
     type: [String],

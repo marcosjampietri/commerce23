@@ -46,7 +46,7 @@ const CartPage = () => {
                   <Image
                     width={300}
                     height={100}
-                    src={product.image}
+                    src={product.images[0]}
                     alt={product.title}
                     style={{
                       objectFit: "cover",

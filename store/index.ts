@@ -2,7 +2,16 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { persistReducer, persistStore } from "redux-persist";
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import thunk from "redux-thunk";
 
 import users from "./usersSlicer";
@@ -13,6 +22,7 @@ import subscription from "./subscriptionSlicer";
 import load from "./loadSlicer";
 import cart from "./cartSlicer";
 import address from "./addressSlicer";
+import { productsApi } from "./useGetProductQuery";
 
 const combinedReducer = combineReducers({
   users,
@@ -23,6 +33,7 @@ const combinedReducer = combineReducers({
   address,
   cart,
   subscription,
+  [productsApi.reducerPath]: productsApi.reducer,
 });
 
 const masterReducer = (state: any, action: any) => {
@@ -46,13 +57,27 @@ const masterReducer = (state: any, action: any) => {
   }
 };
 
+// const store = configureStore({
+//   reducer: {
+//     [productsApi.reducerPath]: productsApi.reducer,
+//   },
+//   middleware: (getDefaultMiddleware) =>
+//     getDefaultMiddleware().concat(productsApi.middleware),
+
+// });
+
 const makeStore = () => {
   if (typeof window === "undefined") {
     //If it's on server side, create a store
     return configureStore({
       reducer: masterReducer,
       devTools: process.env.NODE_ENV !== "production",
-      middleware: [thunk],
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          serializableCheck: {
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+          },
+        }).concat(productsApi.middleware),
     });
   } else {
     //If it's on client side, create a store which will persist
@@ -68,7 +93,12 @@ const makeStore = () => {
     const store: any = configureStore({
       reducer: persistedReducer,
       devTools: process.env.NODE_ENV !== "production",
-      middleware: [thunk],
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          serializableCheck: {
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+          },
+        }).concat(productsApi.middleware),
     }); // Creating the store again
 
     store.__persistor = persistStore(store); // This creates a persistor object & push that persisted object to .__persistor, so that we can avail the persistability feature

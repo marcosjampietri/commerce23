@@ -3,19 +3,18 @@ interface specsTypes {
   dimensions: number[];
   size?: string;
   colour?: string;
-  brandName: string;
+  brand: string;
 }
 
 export type Product = {
   _id: string;
   title: string;
   price: number;
-  image: string;
+  images: string[];
   description: string;
   stock: number;
   quantity?: number;
   itemTotal?: number;
-  url?: string;
   categories?: string[];
   tags?: string[];
   specs?: specsTypes;

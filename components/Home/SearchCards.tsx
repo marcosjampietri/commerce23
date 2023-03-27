@@ -18,12 +18,9 @@ import {
 } from "@/store/cartSlicer";
 import ProductsLoad from "./ProductCardsLoad";
 import { useGetProductsQuery } from "@/store/useGetProductQuery";
-import { useEffect } from "react";
 
 const Cards = () => {
   const dispatch: AppDispatch = useDispatch();
-
-  // const { list: productList, loading } = useTypedSelector(selectProducts);
 
   const { currentPage, productsPerPage } = useTypedSelector(selectProducts);
 
@@ -38,10 +35,6 @@ const Cards = () => {
     perPage: productsPerPage,
   });
 
-  const productList = data && data.products;
-
-  // console.log(productList, data);
-
   const { yourCart } = useTypedSelector(selectCart);
   const qty = (productID: string) =>
     yourCart[yourCart.findIndex((x: any) => x._id === productID)].quantity;
@@ -52,8 +45,8 @@ const Cards = () => {
 
       <Table>
         {loading && <ProductsLoad />}
-        {productList &&
-          productList.map((product: Product, index: number) => (
+        {data!.products &&
+          data!.products.map((product: Product, index: number) => (
             <ProductCard key={index}>
               {product.stock == 0 && <StockInfo>SOLD OUT</StockInfo>}
               {product.stock == 1 && (
@@ -99,7 +92,7 @@ const Cards = () => {
 
               <Price>
                 <h3>£ {product.price} </h3>
-                <h4>£ {(product.price * 1.2).toFixed(2)} </h4>
+                <h4>£ {product.price * 1.2} </h4>
               </Price>
 
               <Controls>
@@ -183,7 +176,7 @@ const ProductCard = styled.div`
   position: relative;
   max-width: 37vw;
   min-width: 110px;
-  margin: 20px 3vw;
+  margin: 20px 10px;
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 200px;
@@ -198,10 +191,6 @@ const ProductName = styled.div`
     font-weight: 400;
     font-size: clamp(0.8em, 1.2vw, 1em);
     color: hsla(0, 0%, 10%, 1);
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 `;
 

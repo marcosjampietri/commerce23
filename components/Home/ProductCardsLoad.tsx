@@ -5,7 +5,7 @@ const ProductsLoad = () => {
   return (
     <>
       {[...Array(10)].map((product: Product, index: number) => (
-        <CardSkeleton>
+        <CardSkeleton key={index}>
           <PictureSkeleton />
           <ProductSkeleton>&zwnj;</ProductSkeleton>
           <ProductSkeleton>&zwnj;</ProductSkeleton>

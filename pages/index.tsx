@@ -6,16 +6,10 @@ import { fetchProducts } from "../store/productsSlicer";
 
 import ProductCards from "../components/Home/ProductCards";
 
-import { AppDispatch } from "@/store";
 import Footer from "@/components/General/Footer";
 import Hero from "@/components/Home/Hero";
 
 const Home: NextPage = () => {
-  const dispatch: AppDispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
-
   return (
     <div>
       <Head>

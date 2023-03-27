@@ -38,21 +38,9 @@ const Child = () => {
       target: undefined,
     },
     {
-      name: "ABOUT",
+      name: "SEARCH",
       color: "hsla(263, 0%, 40%, 0.2)",
-      path: "/about",
-      target: undefined,
-    },
-    {
-      name: "WORKS",
-      color: "hsla(263, 0%, 20%, 0.2)",
-      path: "/works",
-      target: undefined,
-    },
-    {
-      name: "CONTACT",
-      color: "hsla(263, 0%, 30%, 0.2)",
-      path: "/contact",
+      path: "/search",
       target: undefined,
     },
   ];

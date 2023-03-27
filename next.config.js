@@ -5,7 +5,7 @@ const nextConfig = {
   // concurrentFeatures: true,
   trailingSlash: true,
   images: {
-    domains: ["images.unsplash.com", "res.cloudinary.com"],
+    domains: ["images.unsplash.com", "res.cloudinary.com", "i.dummyjson.com"],
   },
   compiler: {
     styledComponents: true,

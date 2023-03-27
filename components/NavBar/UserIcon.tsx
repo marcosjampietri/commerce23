@@ -70,7 +70,7 @@ const UserIcon = () => {
           <Modal>
             <UImenu>
               {modItems.map((item, index) => (
-                <MenuItem onClick={item.click}>
+                <MenuItem key={index} onClick={item.click}>
                   {item.icon}
                   {item.name}
                 </MenuItem>

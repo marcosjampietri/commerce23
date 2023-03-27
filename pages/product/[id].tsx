@@ -26,7 +26,7 @@ const ProductPage = ({ product }: any) => {
         <Description>
           <Photo>
             <Image
-              src={product.image}
+              src={product.images[0]}
               alt={product.title}
               width={100}
               height={100}
@@ -78,10 +78,10 @@ export const getStaticProps = wrapper.getStaticProps(
         ? "http://localhost:3000"
         : "https://commerce23.vercel.app";
     const productsUrl = () => `${url}/api/products`;
-    const { data: productsList } = await axios.get(productsUrl());
+    const { data } = await axios.get(productsUrl());
 
     const id = await context.params?.id;
-    const product: Product = await productsList.find((a: any) => a._id === id);
+    const product: Product = await data.products.find((a: any) => a._id === id);
     return {
       props: { product },
     };
