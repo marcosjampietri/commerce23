@@ -7,8 +7,10 @@ export interface ProductsState {
   list: Product[];
   loading: boolean;
   pages: number;
-  currentPage?: any;
-  productsPerPage?: any;
+  currentPage?: number;
+  productsPerPage?: string;
+  searchTerm: string;
+  category: string;
 }
 interface prodArgsType {
   currentPage?: any;
@@ -19,8 +21,10 @@ const initialState = {
   list: [],
   loading: false,
   pages: 0,
-  currentPage: 0,
-  productsPerPage: "10",
+  currentPage: 1,
+  productsPerPage: "",
+  searchTerm: "",
+  category: "",
 } as ProductsState;
 
 export const fetchProducts = createAsyncThunk(
@@ -53,6 +57,12 @@ export const productsSlice = createSlice({
     setproductsPerPage(state, { payload }) {
       state.productsPerPage = payload;
     },
+    setsearchTerm(state, { payload }) {
+      state.searchTerm = payload;
+    },
+    setcategory(state, { payload }) {
+      state.category = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
@@ -69,6 +79,11 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { setcurrentPage, setproductsPerPage } = productsSlice.actions;
+export const {
+  setcurrentPage,
+  setproductsPerPage,
+  setsearchTerm,
+  setcategory,
+} = productsSlice.actions;
 export const selectProducts = (state: AppState) => state.products;
 export default productsSlice.reducer;

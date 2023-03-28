@@ -10,9 +10,11 @@ interface GetProductsResponse {
 
 interface GetProductsVariables {
   category?: string;
-  page?: number;
+
   searchTerm?: string;
-  perPage?: string;
+
+  currentPage?: number;
+  productsPerPage?: string;
 }
 
 const url =
@@ -27,12 +29,13 @@ export const productsApi = createApi({
   tagTypes: ["Product"],
   endpoints: (builder) => ({
     getProducts: builder.query<GetProductsResponse, GetProductsVariables>({
-      query: ({ category, page, searchTerm, perPage }) => {
-        const c = category ? `category=${category}` : "";
+      query: ({ category, currentPage, searchTerm, productsPerPage }) => {
+        const c = category ? `&category=${category}` : "";
         const s = searchTerm ? `&searchTerm=${searchTerm}` : "";
-        const p = perPage ? `&perpage=${perPage}` : "";
+        const p = productsPerPage ? `&perpage=${productsPerPage}` : "";
+        const g = currentPage ? `&page=${currentPage}` : "";
 
-        const finalUrl = `/products?&page=${page}${c}${s}${p}`;
+        const finalUrl = `/products?${g}${c}${s}${p}`;
         console.log(finalUrl);
 
         return finalUrl;

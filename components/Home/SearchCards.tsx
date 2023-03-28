@@ -22,7 +22,8 @@ import { useGetProductsQuery } from "@/store/useGetProductQuery";
 const Cards = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const { currentPage, productsPerPage } = useTypedSelector(selectProducts);
+  const { currentPage, productsPerPage, searchTerm, category } =
+    useTypedSelector(selectProducts);
 
   const {
     data,
@@ -31,8 +32,10 @@ const Cards = () => {
     error,
     refetch,
   } = useGetProductsQuery({
-    page: currentPage,
-    perPage: productsPerPage,
+    currentPage,
+    productsPerPage,
+    searchTerm,
+    category,
   });
 
   const { yourCart } = useTypedSelector(selectCart);
@@ -45,7 +48,7 @@ const Cards = () => {
 
       <Table>
         {loading && <ProductsLoad />}
-        {data!.products &&
+        {data &&
           data!.products.map((product: Product, index: number) => (
             <ProductCard key={index}>
               {product.stock == 0 && <StockInfo>SOLD OUT</StockInfo>}

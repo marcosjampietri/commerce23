@@ -7,7 +7,7 @@ import { FiStar } from "react-icons/fi";
 import { FaMinus, FaPlus } from "react-icons/fa";
 
 import { Product } from "@/types/product";
-import { selectProducts } from "@/store/productsSlicer";
+import { selectProducts, setcategory } from "@/store/productsSlicer";
 import {
   addToCart,
   decreaseQty,
@@ -19,13 +19,16 @@ import {
 import ProductsLoad from "./ProductCardsLoad";
 import { useGetProductsQuery } from "@/store/useGetProductQuery";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Cards = () => {
   const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
 
   // const { list: productList, loading } = useTypedSelector(selectProducts);
 
-  const { currentPage, productsPerPage } = useTypedSelector(selectProducts);
+  const { currentPage, productsPerPage, searchTerm, category } =
+    useTypedSelector(selectProducts);
 
   const {
     data,
@@ -34,8 +37,10 @@ const Cards = () => {
     error,
     refetch,
   } = useGetProductsQuery({
-    page: currentPage,
-    perPage: productsPerPage,
+    currentPage: 1,
+    productsPerPage: "30",
+    searchTerm: "",
+    category: "",
   });
 
   const productList = data && data.products;
@@ -85,7 +90,13 @@ const Cards = () => {
               </Link>
               <Tags>
                 {product.categories?.map((item, i) => (
-                  <div key={i}>{`${item} - `}</div>
+                  <div
+                    key={i}
+                    onClick={() => {
+                      router.push("/search");
+                      dispatch(setcategory(item));
+                    }}
+                  >{`${item} - `}</div>
                 ))}
               </Tags>
               <Star>
@@ -250,6 +261,10 @@ const Tags = styled.div`
   font-size: 0.7em;
 
   display: flex;
+
+  div {
+    cursor: pointer;
+  }
 `;
 
 const Controls = styled.div`

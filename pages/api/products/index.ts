@@ -29,7 +29,10 @@ export default async function handler(
       .limit(productsPerPage);
     // .sort({ createdAt: -1 });
 
-    const numberOfproducts = await Product.countDocuments(filter);
+    const numberOfproducts = await Product.find(filter)
+      // .skip(skip)
+      // .limit(productsPerPage)
+      .countDocuments(filter);
     const numberOfPages = Math.ceil(numberOfproducts / productsPerPage);
 
     res.status(200).json({
