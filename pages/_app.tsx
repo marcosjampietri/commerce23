@@ -8,18 +8,18 @@ import { useRouter } from "next/router";
 import { Transition, animated, config } from "react-spring";
 import styled from "styled-components";
 import { Montserrat, Poppins } from "next/font/google";
+import { selectUsers } from "@/store/usersSlicer";
+import { selectload, setSubmitting } from "@/store/loadSlicer";
+import { useEffect } from "react";
 
 const ms = Montserrat({ subsets: ["latin"] });
 const pp = Poppins({ weight: "200", subsets: ["latin"] });
 
 import NavBar from "../components/NavBar/";
 import Top from "@/components/General/Top";
-import Menu from "@/components/General/Menu";
 import OrderPanel from "@/components/General/OrderPanel";
 import Loader from "@/components/General/Loader";
-import { selectUsers } from "@/store/usersSlicer";
-import { selectload, setSubmitting } from "@/store/loadSlicer";
-import { useEffect } from "react";
+import SearchMenu from "@/components/General/SearchMenu";
 
 function MyApp({ Component, pageProps, router, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -75,7 +75,7 @@ const AppChild = ({ Component, pageProps }: AppProps) => {
       <NextChild className={`${ms.className} ${pp.className}`}>
         <Top />
         <NavBar />
-        <Menu />
+        <SearchMenu />
         <OrderPanel />
         <StyledDiv>
           <Transition

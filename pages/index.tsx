@@ -4,10 +4,9 @@ import Head from "next/head";
 import { useDispatch } from "react-redux";
 import { fetchProducts } from "../store/productsSlicer";
 
-import ProductCards from "../components/Home/ProductCards";
-
 import Footer from "@/components/General/Footer";
 import Hero from "@/components/Home/Hero";
+import NewProducts from "@/components/Home/NewProducts";
 
 const Home: NextPage = () => {
   return (
@@ -20,7 +19,7 @@ const Home: NextPage = () => {
 
       <main>
         <Hero />
-        <ProductCards />
+        <NewProducts />
       </main>
 
       <Footer />

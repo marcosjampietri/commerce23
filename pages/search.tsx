@@ -13,12 +13,14 @@ import { useEffect, useState } from "react";
 import {
   fetchProducts,
   selectProducts,
+  setcategory,
   setcurrentPage,
   setproductsPerPage,
 } from "@/store/productsSlicer";
-import SearchCards from "@/components/Home/SearchCards";
+
 import ProductsLoad from "@/components/Home/ProductCardsLoad";
 import { useGetProductsQuery } from "@/store/useGetProductQuery";
+import SearchProducts from "@/components/Home/SearchProducts";
 
 const Forum: NextPage = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -43,7 +45,7 @@ const Forum: NextPage = () => {
 
   const pages = Array.from(new Array(p), (val, index) => index + 1);
 
-  const options = ["5", "10", "30"];
+  const options = ["3", "5", "10", "30"];
 
   return (
     <div>
@@ -55,37 +57,39 @@ const Forum: NextPage = () => {
 
       <Main style={{ paddingTop: "70px" }}>
         <div>
-          <div style={{ display: "flex" }}>
-            pages:
-            {pages.map((page, i) => {
-              return (
-                <h1
-                  style={{ padding: "10px", cursor: "pointer", margin: "5px" }}
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <NumPages>
+              <span style={{ margin: "10px" }}>pages:</span>
+              {pages.map((page, i) => (
+                <div
                   key={i}
                   onClick={() => {
                     dispatch(setcurrentPage(page));
                   }}
+                  className={`${page == currentPage ? "current" : ""}`}
                 >
                   {page}
-                </h1>
-              );
-            })}
-            <div>products per page</div>
-            {options.map((productsPerPage, i) => (
-              <div
-                key={i}
-                style={{ margin: "20px" }}
-                onClick={() => {
-                  dispatch(setproductsPerPage(productsPerPage));
+                </div>
+              ))}
+            </NumPages>
+            <NumItems>
+              <div>products per page</div>
+              <select
+                onChange={(e) => {
+                  dispatch(setproductsPerPage(e.target.value));
                   dispatch(setcurrentPage(1));
                 }}
               >
-                {productsPerPage}
-              </div>
-            ))}
+                {options.map((number, i) => (
+                  <option key={i} value={number}>
+                    {number}
+                  </option>
+                ))}
+              </select>
+            </NumItems>
           </div>
           {loading && <ProductsLoad />}
-          <SearchCards />
+          <SearchProducts />
         </div>
       </Main>
     </div>
@@ -100,5 +104,41 @@ const Main = styled.main`
 
   h1 {
     color: black;
+  }
+`;
+
+const NumPages = styled.div`
+  height: 50px;
+  margin: 10px;
+
+  display: flex;
+  align-items: center;
+
+  div {
+    width: 30px;
+    height: 30px;
+
+    border: 1px #aaa solid;
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+  }
+
+  .current {
+    background: #bbbbbb;
+    color: white;
+  }
+`;
+
+const NumItems = styled.div`
+  height: 50px;
+  margin: 10px;
+
+  display: flex;
+  align-items: center;
+
+  div {
+    margin: 10px;
   }
 `;

@@ -12,7 +12,6 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import thunk from "redux-thunk";
 
 import users from "./usersSlicer";
 import stepper from "./stepperSlicer";
@@ -57,15 +56,6 @@ const masterReducer = (state: any, action: any) => {
   }
 };
 
-// const store = configureStore({
-//   reducer: {
-//     [productsApi.reducerPath]: productsApi.reducer,
-//   },
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware().concat(productsApi.middleware),
-
-// });
-
 const makeStore = () => {
   if (typeof window === "undefined") {
     //If it's on server side, create a store
@@ -85,7 +75,7 @@ const makeStore = () => {
       {
         key: "root",
         storage: AsyncStorage,
-        blacklist: ["toggle", "load"],
+        blacklist: ["toggle", "load", "products"],
       },
       masterReducer
     ); // Create a new reducer with our existing reducer

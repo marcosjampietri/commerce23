@@ -1,17 +1,19 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import Link from "next/link";
 import { animated, useTransition } from "react-spring";
-
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import BezierEasing from "bezier-easing";
+
 import { useTypedSelector } from "@/store";
 import { navOffAction, selectToggle } from "@/store/toggleSlicer";
+import { setcategory, setcurrentPage } from "@/store/productsSlicer";
 
 const useOutsideAlerter = (ref: React.RefObject<HTMLElement>) => {
   const dispatch = useDispatch();
 
   const { NavOn } = useTypedSelector(selectToggle);
+
   useEffect(() => {
     if (NavOn) {
       const handleClickOutside = (event: any) => {
@@ -30,32 +32,55 @@ const useOutsideAlerter = (ref: React.RefObject<HTMLElement>) => {
 };
 
 const Child = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const inSearch = router.pathname == "/search";
+
   const menuItems = [
     {
-      name: "HOME",
-      color: "hsla(263, 0%, 40%, 0.2)",
-      path: "/",
-      target: undefined,
+      name: "All Products",
+      cat: "",
     },
     {
-      name: "SEARCH",
-      color: "hsla(263, 0%, 40%, 0.2)",
-      path: "/search",
-      target: undefined,
+      name: "Laptops",
+      cat: "laptops",
+    },
+    {
+      name: "Groceries",
+      cat: "groceries",
+    },
+    {
+      name: "Skincare",
+      cat: "skincare",
+    },
+    {
+      name: "Home-Decoration",
+      cat: "home-decoration",
+    },
+    {
+      name: "Fragrances",
+      cat: "fragrances",
     },
   ];
   return (
     <Div>
       {menuItems.map((item, i) => (
-        <Link key={i} href={item.path}>
-          <H2>{item.name}</H2>
-        </Link>
+        <CatItem
+          key={i}
+          onClick={() => {
+            !inSearch && router.push("/search");
+            dispatch(setcategory(item.cat));
+            dispatch(setcurrentPage(1));
+          }}
+        >
+          {item.name}
+        </CatItem>
       ))}
     </Div>
   );
 };
 
-const Menu = () => {
+const SearchMenu = () => {
   const dispatch = useDispatch();
 
   const { NavOn } = useTypedSelector(selectToggle);
@@ -117,7 +142,7 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default SearchMenu;
 
 //style------------------------------------------------------------------
 
@@ -130,7 +155,11 @@ const Whole = styled(animated.div)`
   height: 100vh;
   padding-top: 70px;
 
-  background-image: linear-gradient(hsla(35, 0%, 90%, 1), hsla(35, 0%, 75%, 1));
+  background-image: linear-gradient(
+    hsla(35, 0%, 100%, 1),
+    hsla(35, 0%, 95%, 1)
+  );
+  border: 1px #c8c8c8 solid;
 
   // display: flex;
   // align-items: center;
@@ -149,15 +178,23 @@ const Div = styled.div`
   width: 100%;
   height: 100%;
   color: white;
-  display: flex;
+  /* display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: column; */
 `;
 
-const H2 = styled.h2`
-  font-size: clamp(30px, 10vw, 70px);
-  /* font-family: Montserrat; */
-  margin: 20px;
-  font-weight: 100;
+const CatItem = styled.div`
+  margin: 10px;
+  padding: 10px;
+  font-size: 20px;
+  font-family: Montserrat;
+  font-weight: 300;
+
+  cursor: pointer;
+  color: black;
+
+  :hover {
+    color: #9d9d9d;
+  }
 `;
