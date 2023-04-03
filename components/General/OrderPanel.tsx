@@ -22,9 +22,9 @@ const OrderPanel = () => {
 
   let deliverTo: any = null;
 
-  if (userInfo && userInfo.addresses?.length > 0) {
-    const activeAddress = userInfo?.addresses?.length - 1;
-    deliverTo = userInfo?.addresses[activeAddress];
+  if (userInfo && userInfo.address?.length > 0) {
+    const activeAddress = userInfo?.address?.length - 1;
+    deliverTo = userInfo?.address[activeAddress];
   }
 
   const toggleCart = useTransition(CartOn, {

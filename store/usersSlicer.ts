@@ -2,11 +2,19 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { AppState } from "../store/index";
 import axios from "axios";
 
+interface AdressType {
+  fullname: string;
+  street: string;
+  city: string;
+  postcode: string;
+  country: string;
+}
+
 interface UserInfoType {
   _id: string;
   name: string;
   email: string;
-  address: object[];
+  address: AdressType[];
 }
 
 interface UserState {

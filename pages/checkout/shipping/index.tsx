@@ -53,14 +53,14 @@ const ShippingStep = () => {
         </button>
         <button
           onClick={() =>
-            userInfo.address?.length > 0 && dispatch(newAddressOff())
+            userInfo!.address?.length > 0 && dispatch(newAddressOff())
           }
           className={`${newAddress ? "" : "on"}`}
         >
           CHOOSE FROM LIST
         </button>
       </Switch>
-      {!newAddress && userInfo.address?.length > 0 ? (
+      {!newAddress && userInfo!.address?.length > 0 ? (
         <>
           <ShippingAddress />
         </>

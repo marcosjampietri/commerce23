@@ -62,7 +62,7 @@ const PaymentForm = () => {
       });
       //create order
       setprogress("creatin order");
-      const deliverAddress = userInfo.address[activeAddress];
+      const deliverAddress = userInfo!.address[activeAddress];
       const { data: orderId } = await axios.post("/api/order", {
         yourCart,
         userInfo,
