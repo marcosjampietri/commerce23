@@ -8,6 +8,7 @@ import BezierEasing from "bezier-easing";
 import { useTypedSelector } from "@/store";
 import { navOffAction, selectToggle } from "@/store/toggleSlicer";
 import { setcategory, setcurrentPage } from "@/store/productsSlicer";
+import Link from "next/link";
 
 const useOutsideAlerter = (ref: React.RefObject<HTMLElement>) => {
   const dispatch = useDispatch();
@@ -64,6 +65,11 @@ const Child = () => {
   ];
   return (
     <Div>
+      <Link href="/">
+        <div style={{ color: "black", margin: "10px", fontSize: "2em" }}>
+          HOME
+        </div>
+      </Link>
       {menuItems.map((item, i) => (
         <CatItem
           key={i}
@@ -89,55 +95,40 @@ const SearchMenu = () => {
 
   useOutsideAlerter(wrapperRef);
 
-  const easing = BezierEasing(0.95, 0, 0, 1);
-  const VH = window.innerHeight;
-  const slidePic = useTransition(NavOn, {
+  const easing = BezierEasing(0.7, 0, 0, 1);
+  const VW = window.innerWidth;
+  const transition = useTransition(NavOn, {
     key: NavOn,
     from: {
-      y: -VH * 0.4,
-      y2: VH * 0.4,
+      x: -VW * 0.3,
       opacity: 0,
     },
     enter: {
-      y: 0,
-      y2: 0,
+      x: 0,
       opacity: 1,
     },
     leave: {
-      y: -VH,
-      y2: VH,
+      x: -VW,
       opacity: 1,
     },
     config: {
-      duration: 1000,
+      duration: 800,
       easing: (t) => easing(t),
     },
   });
 
-  return slidePic(({ y, y2, opacity }, menu) =>
+  return transition(({ x, opacity }, menu) =>
     menu ? (
-      <>
-        <Slice1
-          style={{
-            y,
-            opacity,
-          }}
-          ref={wrapperRef}
-          onClick={() => dispatch(navOffAction())}
-        >
-          <Child />
-        </Slice1>
-        <Slice2
-          style={{
-            y: y2,
-            opacity,
-          }}
-          ref={wrapperRef}
-          onClick={() => dispatch(navOffAction())}
-        >
-          <Child />
-        </Slice2>
-      </>
+      <Whole
+        style={{
+          x,
+          opacity,
+        }}
+        ref={wrapperRef}
+        onClick={() => dispatch(navOffAction())}
+      >
+        <Child />
+      </Whole>
     ) : null
   );
 };
@@ -150,8 +141,7 @@ const Whole = styled(animated.div)`
   position: fixed;
   top: 0px;
   left: 0px;
-  z-index: 8;
-  width: 30vw;
+  z-index: 16;
   height: 100vh;
   padding-top: 70px;
 
@@ -160,28 +150,12 @@ const Whole = styled(animated.div)`
     hsla(35, 0%, 95%, 1)
   );
   border: 1px #c8c8c8 solid;
-
-  // display: flex;
-  // align-items: center;
-  /* pointer-events: none; */
-`;
-
-const Slice1 = styled(Whole)`
-  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-`;
-
-const Slice2 = styled(Whole)`
-  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
 `;
 
 const Div = styled.div`
   width: 100%;
   height: 100%;
   color: white;
-  /* display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column; */
 `;
 
 const CatItem = styled.div`

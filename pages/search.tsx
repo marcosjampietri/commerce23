@@ -1,26 +1,20 @@
 import type { NextPage } from "next";
-import Link from "next/link";
 import Head from "next/head";
-
 import styled from "styled-components";
-import { Margin } from "@/styles/globalSC";
+
 import { AppDispatch, useTypedSelector } from "@/store";
-import { selectUsers } from "@/store/usersSlicer";
-
 import { useDispatch } from "react-redux";
-
-import { useEffect, useState } from "react";
 import {
-  fetchProducts,
   selectProducts,
-  setcategory,
   setcurrentPage,
   setproductsPerPage,
 } from "@/store/productsSlicer";
+import { useGetProductsQuery } from "@/store/useGetProductQuery";
 
 import ProductsLoad from "@/components/Home/ProductCardsLoad";
-import { useGetProductsQuery } from "@/store/useGetProductQuery";
 import SearchProducts from "@/components/Home/SearchProducts";
+import { Table } from "@/components/Home/NewProducts";
+import Footer from "@/components/General/Footer";
 
 const Forum: NextPage = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -57,7 +51,13 @@ const Forum: NextPage = () => {
 
       <Main style={{ paddingTop: "70px" }}>
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              margin: "10px",
+            }}
+          >
             <NumPages>
               <span style={{ margin: "10px" }}>pages:</span>
               {pages.map((page, i) => (
@@ -81,16 +81,21 @@ const Forum: NextPage = () => {
                 }}
               >
                 {options.map((number, i) => (
-                  <option key={i} value={number}>
+                  <option
+                    key={i}
+                    value={number}
+                    selected={number == "5" && true}
+                  >
                     {number}
                   </option>
                 ))}
               </select>
             </NumItems>
           </div>
-          {loading && <ProductsLoad />}
+          <Table>{loading && <ProductsLoad />}</Table>
           <SearchProducts />
         </div>
+        <Footer />
       </Main>
     </div>
   );
@@ -108,10 +113,10 @@ const Main = styled.main`
 `;
 
 const NumPages = styled.div`
-  height: 50px;
-  margin: 10px;
+  width: 50%;
 
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 
   div {
@@ -133,7 +138,6 @@ const NumPages = styled.div`
 
 const NumItems = styled.div`
   height: 50px;
-  margin: 10px;
 
   display: flex;
   align-items: center;

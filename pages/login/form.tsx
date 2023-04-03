@@ -239,14 +239,15 @@ const FormComponent = ({ reg }: any) => {
           ) : null
         )}
         <Blank />
-
-        {switchSign((styles, item) =>
-          !item ? (
-            <animated.div style={styles} onClick={() => setForgot(!forgot)}>
-              {forgot ? "Cancel" : "Forgot Password?"}
-            </animated.div>
-          ) : null
+        {!reg && (
+          <div
+            style={{ textAlign: "center" }}
+            onClick={() => setForgot(!forgot)}
+          >
+            {forgot ? "Cancel" : "Forgot Password?"}
+          </div>
         )}
+
         {switchSign((styles, item) =>
           item ? (
             <>
@@ -276,8 +277,8 @@ const FormComponent = ({ reg }: any) => {
         {switchSign((styles, item) =>
           item ? (
             <>
-              <FieldWrap style={styles}>
-                <Field>
+              <AcceptWrap style={styles}>
+                <AcceptField>
                   <label htmlFor="acceptTerms">
                     <div
                       style={{
@@ -295,8 +296,8 @@ const FormComponent = ({ reg }: any) => {
                       <div>Accept Terms & Conditions</div>
                     </div>
                   </label>
-                </Field>
-              </FieldWrap>
+                </AcceptField>
+              </AcceptWrap>
 
               <ErrorWrap>
                 {errTransAcp((styles, erracpt) =>
@@ -351,4 +352,28 @@ const SubmitWrap = styled.div`
 
 const ErrorWrap = styled(animated.div)`
   position: relative;
+`;
+
+const AcceptWrap = styled(animated.div)`
+  position: relative;
+  width: 95%;
+  margin: 0px auto;
+  overflow: hidden;
+`;
+
+const AcceptField = styled.div`
+  position: relative;
+  width: 100%;
+  height: 60px;
+  margin: 10px auto;
+  padding: 0px;
+
+  input {
+    margin: 10px;
+  }
+
+  .invalid {
+    transition: 0.3s;
+    border: 2px solid hsla(0, 100%, 50%, 0.7);
+  }
 `;

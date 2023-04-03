@@ -1,11 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { AppState } from "../store/index";
 import axios from "axios";
-// import { userInfoType } from "../types";
+
+interface UserInfoType {
+  _id: string;
+  name: string;
+  email: string;
+  address: object[];
+}
 
 interface UserState {
   userLoading: boolean;
-  userInfo: any;
+  userInfo: UserInfoType | null;
   profile: object | null;
   errorMsg: any;
 }

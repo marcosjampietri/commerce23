@@ -175,6 +175,10 @@ const ProductOnOrder = styled.div`
     width: 50%;
     min-width: 100px;
     margin: 0px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .pr {
     width: 70px;

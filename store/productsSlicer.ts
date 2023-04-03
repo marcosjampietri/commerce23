@@ -22,7 +22,7 @@ const initialState = {
   loading: false,
   pages: 0,
   currentPage: 1,
-  productsPerPage: "",
+  productsPerPage: "5",
   searchTerm: "",
   category: "",
 } as ProductsState;

@@ -38,7 +38,7 @@ const Nav = styled.nav`
   padding: 10px 20px;
 
   background: hsla(42, 0%, 50%, 0);
-  z-index: 14;
+  z-index: 17;
   transition: 0.5s;
   backdrop-filter: blur(3px);
 

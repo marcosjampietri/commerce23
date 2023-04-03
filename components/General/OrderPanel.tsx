@@ -198,6 +198,9 @@ const ProductOnOrder = styled.div`
     min-width: 100px;
     margin: 0px;
     text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .pr {
     width: 70px;

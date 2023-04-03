@@ -31,12 +31,13 @@ const ShippingStep = () => {
 
   const { userInfo } = useTypedSelector(selectUsers);
   const { inputAddress, newAddress } = useTypedSelector(selectAddress);
+  const hasAdress = userInfo!.address.length > 0;
 
   console.log(inputAddress);
 
   useEffect(() => {
-    dispatch(newAddressOn());
-  }, []);
+    hasAdress ? dispatch(newAddressOff()) : dispatch(newAddressOn());
+  }, [hasAdress]);
 
   return (
     <>

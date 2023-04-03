@@ -175,6 +175,9 @@ const Text = styled.div`
   h2 {
     margin: 0px 0px 10px;
 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-transform: capitalize;
     font-weight: 600;
     font-size: clamp(0.9em, 1.5vw, 1.2em);
